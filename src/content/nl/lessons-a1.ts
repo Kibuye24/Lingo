@@ -1,0 +1,1204 @@
+import type { Lesson } from "@/lib/types";
+
+/**
+ * A1 units 4–12. The earlier lessons live in `lessons.ts`; these continue the
+ * same shape and are concatenated in `index.ts`.
+ */
+export const lessonsA1: Lesson[] = [
+  // ── Getallen en tijd ──────────────────────────────────────────────────────
+  {
+    id: "getallen",
+    unit: "getallen",
+    title: "Tellen",
+    titleEn: "Counting",
+    canDo: "Say and understand numbers up to a hundred — prices, ages, platforms.",
+    level: "A1",
+    phrases: [
+      {
+        id: "tot-tien",
+        target: "een, twee, drie, vier, vijf",
+        en: "one, two, three, four, five",
+        gloss: [
+          { target: "een", en: "one" },
+          { target: "twee", en: "two" },
+          { target: "drie", en: "three" },
+          { target: "vier", en: "four" },
+          { target: "vijf", en: "five" },
+        ],
+        say: "ayn, tvay, dree, veer, vayf",
+        note: "'Een' is both 'one' and 'a'. When it means one, it's often written 'één' to make that clear.",
+      },
+      {
+        id: "zes-tien",
+        target: "zes, zeven, acht, negen, tien",
+        en: "six, seven, eight, nine, ten",
+        gloss: [
+          { target: "zes", en: "six" },
+          { target: "zeven", en: "seven" },
+          { target: "acht", en: "eight" },
+          { target: "negen", en: "nine" },
+          { target: "tien", en: "ten" },
+        ],
+        say: "zes, ZAY-vun, akht, NAY-ghun, teen",
+      },
+      {
+        id: "eenentwintig",
+        target: "eenentwintig",
+        en: "twenty-one",
+        gloss: [
+          { target: "een", en: "one" },
+          { target: "en", en: "and" },
+          { target: "twintig", en: "twenty" },
+        ],
+        say: "AYN-un-tvin-tukh",
+        note: "Dutch says the small number first: one-and-twenty. Every two-digit number works this way, and it stays awkward until you stop translating and start hearing it whole.",
+        pattern: {
+          template: "___entwintig / ___endertig",
+          templateEn: "Units before tens",
+          slots: [
+            { target: "eenentwintig", en: "21 — one-and-twenty" },
+            { target: "vierentwintig", en: "24 — four-and-twenty" },
+            { target: "zevenendertig", en: "37 — seven-and-thirty" },
+            { target: "negenennegentig", en: "99 — nine-and-ninety" },
+          ],
+        },
+      },
+      {
+        id: "tientallen",
+        target: "twintig, dertig, veertig, vijftig",
+        en: "twenty, thirty, forty, fifty",
+        gloss: [
+          { target: "twintig", en: "twenty" },
+          { target: "dertig", en: "thirty" },
+          { target: "veertig", en: "forty" },
+          { target: "vijftig", en: "fifty" },
+        ],
+        say: "TVIN-tukh, DER-tukh, VEER-tukh, VAYF-tukh",
+        note: "Note 'dertig' and 'veertig' — not 'drietig' or 'viertig'. Three and four go irregular here.",
+      },
+      {
+        id: "hoeveel-mensen",
+        target: "Met hoeveel mensen zijn jullie?",
+        en: "How many of you are there?",
+        gloss: [
+          { target: "met hoeveel", en: "with how many" },
+          { target: "mensen", en: "people" },
+          { target: "zijn jullie", en: "are you (plural)" },
+        ],
+        say: "met hoo-VAYL MEN-sun zayn YUL-lee",
+        note: "What a waiter asks at the door. The answer is just a number: 'Met z'n tweeën' or simply 'Twee'.",
+      },
+      {
+        id: "ik-ben-jaar",
+        target: "Ik ben tweeëndertig jaar oud.",
+        en: "I'm thirty-two years old.",
+        gloss: [
+          { target: "ik ben", en: "I am" },
+          { target: "tweeëndertig", en: "thirty-two" },
+          { target: "jaar oud", en: "years old" },
+        ],
+        say: "ik ben TVAY-un-der-tukh yaar owt",
+        note: "The diaeresis in 'tweeëndertig' just says: start a new syllable here, don't read 'ee' plus 'e' as one vowel.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Goedemiddag! Met hoeveel mensen zijn jullie?", en: "Good afternoon! How many of you are there?" },
+      { speaker: "you", target: "Met vier.", en: "Four of us.", cue: "There are four of you." },
+      { speaker: "them", target: "Prima. Dat is dan tafel zeven.", en: "Fine. That's table seven then." },
+      {
+        speaker: "you",
+        target: "Sorry, welke tafel?",
+        en: "Sorry, which table?",
+        cue: "You didn't catch the number — ask which table.",
+      },
+      { speaker: "them", target: "Tafel zeven, daar bij het raam.", en: "Table seven, over there by the window." },
+      { speaker: "you", target: "Dank u wel!", en: "Thank you!", cue: "Thank them formally." },
+    ],
+    roleplay:
+      "You are a host at a Dutch restaurant. Ask the learner how many people are in their party, give them a table number, and answer any question about where it is. Use numbers freely and repeat them clearly when asked.",
+  },
+  {
+    id: "klok",
+    unit: "getallen",
+    title: "Hoe laat is het?",
+    titleEn: "Telling the time",
+    canDo: "Ask the time, understand the answer, and agree on when to meet.",
+    level: "A1",
+    phrases: [
+      {
+        id: "hoe-laat",
+        target: "Hoe laat is het?",
+        en: "What time is it?",
+        gloss: [
+          { target: "hoe laat", en: "how late" },
+          { target: "is het", en: "is it" },
+        ],
+        say: "hoo LAAT is ut",
+      },
+      {
+        id: "het-is-uur",
+        target: "Het is drie uur.",
+        en: "It's three o'clock.",
+        gloss: [
+          { target: "het is", en: "it is" },
+          { target: "drie uur", en: "three hour" },
+        ],
+        say: "ut is dree UUR",
+        note: "'Uur' stays singular after a number. Never 'drie uren' for clock time.",
+      },
+      {
+        id: "half-vier",
+        target: "Het is half vier.",
+        en: "It's half past three.",
+        gloss: [
+          { target: "het is", en: "it is" },
+          { target: "half", en: "half" },
+          { target: "vier", en: "four" },
+        ],
+        say: "ut is half VEER",
+        note: "The trap that catches everyone: 'half vier' is 3:30, not 4:30. Dutch counts half-way TO the next hour. Miss this and you are an hour early or late.",
+      },
+      {
+        id: "kwart-over",
+        target: "Het is kwart over drie.",
+        en: "It's a quarter past three.",
+        gloss: [
+          { target: "het is", en: "it is" },
+          { target: "kwart", en: "quarter" },
+          { target: "over", en: "past" },
+          { target: "drie", en: "three" },
+        ],
+        say: "ut is kvart OH-ver dree",
+        pattern: {
+          template: "kwart over / kwart voor ___",
+          templateEn: "quarter past / quarter to ___",
+          slots: [
+            { target: "Het is kwart over drie.", en: "3:15" },
+            { target: "Het is kwart voor vier.", en: "3:45" },
+            { target: "Het is tien over drie.", en: "3:10" },
+            { target: "Het is tien voor half vier.", en: "3:20 — ten before half-to-four" },
+          ],
+        },
+        note: "That last one is genuinely how Dutch people say 3:20. It sounds absurd until it doesn't.",
+      },
+      {
+        id: "om-hoe-laat",
+        target: "Om hoe laat begint het?",
+        en: "What time does it start?",
+        gloss: [
+          { target: "om hoe laat", en: "at how late" },
+          { target: "begint het", en: "starts it" },
+        ],
+        say: "om hoo LAAT buh-GHINT ut",
+        note: "'Om' is the 'at' of clock times: om acht uur, om half negen.",
+      },
+      {
+        id: "ik-ben-te-laat",
+        target: "Sorry, ik ben te laat.",
+        en: "Sorry, I'm late.",
+        gloss: [
+          { target: "sorry", en: "sorry" },
+          { target: "ik ben", en: "I am" },
+          { target: "te laat", en: "too late" },
+        ],
+        say: "sorry, ik ben tuh LAAT",
+        note: "Dutch has no single word for 'late' in this sense — it's literally 'too late'.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Zullen we vanavond eten?", en: "Shall we eat this evening?" },
+      {
+        speaker: "you",
+        target: "Ja, leuk! Om hoe laat?",
+        en: "Yes, nice! What time?",
+        cue: "Agree happily, then ask what time.",
+      },
+      { speaker: "them", target: "Om half acht bij mij?", en: "Half past seven at mine?" },
+      {
+        speaker: "you",
+        target: "Half acht is goed.",
+        en: "Half past seven is good.",
+        cue: "Confirm the time works — careful, half acht is 7:30.",
+      },
+      { speaker: "them", target: "Tot dan!", en: "See you then!" },
+      { speaker: "you", target: "Tot straks!", en: "See you later!", cue: "Say see you later." },
+    ],
+    roleplay:
+      "You are a Dutch friend arranging dinner with the learner. Suggest a time using the half-past construction (half acht, half negen), and if they misread it as the wrong hour, gently correct them. Keep it light.",
+  },
+
+  // ── Familie en mensen ─────────────────────────────────────────────────────
+  {
+    id: "familie",
+    unit: "mensen",
+    title: "Mijn familie",
+    titleEn: "My family",
+    canDo: "Talk about who you live with and who you're related to.",
+    level: "A1",
+    phrases: [
+      {
+        id: "dit-is-mijn",
+        target: "Dit is mijn vrouw.",
+        en: "This is my wife.",
+        gloss: [
+          { target: "dit is", en: "this is" },
+          { target: "mijn", en: "my" },
+          { target: "vrouw", en: "wife / woman" },
+        ],
+        say: "dit is mayn VROW",
+        pattern: {
+          template: "Dit is mijn ___.",
+          templateEn: "This is my ___.",
+          slots: [
+            { target: "Dit is mijn vrouw.", en: "my wife" },
+            { target: "Dit is mijn man.", en: "my husband" },
+            { target: "Dit is mijn zus.", en: "my sister" },
+            { target: "Dit is mijn broer.", en: "my brother" },
+          ],
+        },
+        note: "'Vrouw' means both woman and wife; 'man' both man and husband. Context does the work.",
+      },
+      {
+        id: "ik-heb-kinderen",
+        target: "Ik heb twee kinderen.",
+        en: "I have two children.",
+        gloss: [
+          { target: "ik heb", en: "I have" },
+          { target: "twee", en: "two" },
+          { target: "kinderen", en: "children" },
+        ],
+        say: "ik hep tvay KIN-duh-run",
+        note: "'Kind' becomes 'kinderen' — one of a small group of Dutch plurals that add -eren rather than -en.",
+      },
+      {
+        id: "broers-of-zussen",
+        target: "Heb je broers of zussen?",
+        en: "Do you have brothers or sisters?",
+        gloss: [
+          { target: "heb je", en: "have you" },
+          { target: "broers", en: "brothers" },
+          { target: "of", en: "or" },
+          { target: "zussen", en: "sisters" },
+        ],
+        register: "informal",
+        say: "hep yuh BROORS of ZUS-sun",
+      },
+      {
+        id: "ouders-wonen",
+        target: "Mijn ouders wonen in Engeland.",
+        en: "My parents live in England.",
+        gloss: [
+          { target: "mijn ouders", en: "my parents" },
+          { target: "wonen", en: "live" },
+          { target: "in Engeland", en: "in England" },
+        ],
+        say: "mayn OW-ders VOA-nun in ENG-uh-lant",
+        note: "Plural subject, plural verb: 'ouders wonen', not 'woont'. With one person it's 'mijn moeder woont'.",
+      },
+      {
+        id: "ben-je-getrouwd",
+        target: "Ben je getrouwd?",
+        en: "Are you married?",
+        gloss: [
+          { target: "ben je", en: "are you" },
+          { target: "getrouwd", en: "married" },
+        ],
+        register: "informal",
+        say: "ben yuh khuh-TROWT",
+      },
+      {
+        id: "ik-woon-alleen",
+        target: "Ik woon alleen.",
+        en: "I live alone.",
+        gloss: [
+          { target: "ik woon", en: "I live" },
+          { target: "alleen", en: "alone" },
+        ],
+        say: "ik voan al-LAYN",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Heb je broers of zussen?", en: "Do you have brothers or sisters?" },
+      {
+        speaker: "you",
+        target: "Ja, ik heb een zus.",
+        en: "Yes, I have a sister.",
+        cue: "Say yes, you have one sister.",
+      },
+      { speaker: "them", target: "Woont zij ook in Nederland?", en: "Does she live in the Netherlands too?" },
+      {
+        speaker: "you",
+        target: "Nee, mijn ouders en mijn zus wonen in Engeland.",
+        en: "No, my parents and my sister live in England.",
+        cue: "Say no — your parents and sister live in England.",
+      },
+      { speaker: "them", target: "Mis je ze?", en: "Do you miss them?" },
+      { speaker: "you", target: "Ja, soms wel.", en: "Yes, sometimes.", cue: "Say yes, sometimes." },
+    ],
+    roleplay:
+      "You are a Dutch colleague getting to know the learner over lunch. Ask about their family — siblings, parents, whether they live nearby — and share a little about yours. Keep the questions simple and warm.",
+  },
+
+  // ── Eten en drinken ───────────────────────────────────────────────────────
+  {
+    id: "restaurant",
+    unit: "eten",
+    title: "In het restaurant",
+    titleEn: "At the restaurant",
+    canDo: "Get a table, order a meal, and say what you can't eat.",
+    level: "A1",
+    phrases: [
+      {
+        id: "tafel-voor-twee",
+        target: "Een tafel voor twee, alstublieft.",
+        en: "A table for two, please.",
+        gloss: [
+          { target: "een tafel", en: "a table" },
+          { target: "voor twee", en: "for two" },
+          { target: "alstublieft", en: "please" },
+        ],
+        register: "formal",
+        say: "un TAA-ful voor tvay, als-too-BLEEFT",
+      },
+      {
+        id: "de-kaart-graag",
+        target: "Mag ik de kaart, alstublieft?",
+        en: "Could I have the menu, please?",
+        gloss: [
+          { target: "mag ik", en: "may I" },
+          { target: "de kaart", en: "the menu" },
+          { target: "alstublieft", en: "please" },
+        ],
+        register: "formal",
+        say: "makh ik duh KAART, als-too-BLEEFT",
+        note: "'De kaart' is the menu. 'Het menu' usually means the set menu of the day — not the same thing.",
+      },
+      {
+        id: "ik-neem-de-soep",
+        target: "Ik neem de soep.",
+        en: "I'll have the soup.",
+        gloss: [
+          { target: "ik neem", en: "I take" },
+          { target: "de soep", en: "the soup" },
+        ],
+        say: "ik naym duh SOOP",
+        pattern: {
+          template: "Ik neem ___.",
+          templateEn: "I'll have ___.",
+          slots: [
+            { target: "Ik neem de soep.", en: "the soup" },
+            { target: "Ik neem de vis.", en: "the fish" },
+            { target: "Ik neem het vlees.", en: "the meat" },
+            { target: "Ik neem hetzelfde.", en: "the same" },
+          ],
+        },
+      },
+      {
+        id: "allergisch",
+        target: "Ik ben allergisch voor noten.",
+        en: "I'm allergic to nuts.",
+        gloss: [
+          { target: "ik ben", en: "I am" },
+          { target: "allergisch voor", en: "allergic to" },
+          { target: "noten", en: "nuts" },
+        ],
+        say: "ik ben a-LER-ghees voor NOH-tun",
+        note: "Worth memorising exactly, even if you have no allergy — you may need to say it for someone else.",
+      },
+      {
+        id: "wat-kunt-u-aanbevelen",
+        target: "Wat kunt u aanbevelen?",
+        en: "What would you recommend?",
+        gloss: [
+          { target: "wat", en: "what" },
+          { target: "kunt u", en: "can you (formal)" },
+          { target: "aanbevelen", en: "to recommend" },
+        ],
+        register: "formal",
+        say: "vat kunt oo AAN-buh-vay-lun",
+        note: "The verb lands at the very end. That pattern — modal near the front, main verb at the back — runs through all of Dutch.",
+      },
+      {
+        id: "het-was-heerlijk",
+        target: "Het was heerlijk.",
+        en: "It was delicious.",
+        gloss: [
+          { target: "het was", en: "it was" },
+          { target: "heerlijk", en: "delicious" },
+        ],
+        say: "ut vas HAYR-luk",
+        note: "Your exit line. Say it on the way out and you will be remembered kindly.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Goedenavond! Heeft u gereserveerd?", en: "Good evening! Do you have a reservation?" },
+      {
+        speaker: "you",
+        target: "Nee. Een tafel voor twee, alstublieft.",
+        en: "No. A table for two, please.",
+        cue: "Say no, and ask for a table for two.",
+      },
+      { speaker: "them", target: "Zeker. Wilt u al bestellen?", en: "Certainly. Would you like to order already?" },
+      {
+        speaker: "you",
+        target: "Mag ik de kaart, alstublieft?",
+        en: "Could I have the menu, please?",
+        cue: "Ask for the menu first.",
+      },
+      { speaker: "them", target: "Natuurlijk. Alstublieft.", en: "Of course. Here you are." },
+      {
+        speaker: "you",
+        target: "Ik neem de soep. Ik ben allergisch voor noten.",
+        en: "I'll have the soup. I'm allergic to nuts.",
+        cue: "Order the soup and mention your nut allergy.",
+      },
+    ],
+    roleplay:
+      "You are a waiter in a Dutch restaurant. Greet the learner, seat them, take their order, check about allergies, and bring the bill when asked. Stay in Dutch, be efficient and friendly.",
+  },
+  {
+    id: "boodschappen",
+    unit: "eten",
+    title: "In de supermarkt",
+    titleEn: "At the supermarket",
+    canDo: "Find what you need and buy it by weight or quantity.",
+    level: "A1",
+    phrases: [
+      {
+        id: "waar-vind-ik",
+        target: "Waar vind ik de melk?",
+        en: "Where do I find the milk?",
+        gloss: [
+          { target: "waar", en: "where" },
+          { target: "vind ik", en: "find I" },
+          { target: "de melk", en: "the milk" },
+        ],
+        say: "vaar VINT ik duh MELK",
+        pattern: {
+          template: "Waar vind ik ___?",
+          templateEn: "Where do I find ___?",
+          slots: [
+            { target: "Waar vind ik de melk?", en: "the milk" },
+            { target: "Waar vind ik het brood?", en: "the bread" },
+            { target: "Waar vind ik de groente?", en: "the vegetables" },
+            { target: "Waar vind ik de kassa?", en: "the checkout" },
+          ],
+        },
+      },
+      {
+        id: "kilo-appels",
+        target: "Een kilo appels, graag.",
+        en: "A kilo of apples, please.",
+        gloss: [
+          { target: "een kilo", en: "a kilo" },
+          { target: "appels", en: "apples" },
+          { target: "graag", en: "gladly" },
+        ],
+        say: "un KEE-loh AP-uls, GHRAAKH",
+        note: "No word for 'of' here. 'Een kilo appels', 'een glas water' — the two nouns just sit together.",
+      },
+      {
+        id: "heeft-u-ook",
+        target: "Heeft u ook vers brood?",
+        en: "Do you also have fresh bread?",
+        gloss: [
+          { target: "heeft u", en: "have you (formal)" },
+          { target: "ook", en: "also" },
+          { target: "vers brood", en: "fresh bread" },
+        ],
+        register: "formal",
+        say: "hayft oo oak vers BROAT",
+      },
+      {
+        id: "hoeveel-kost-kilo",
+        target: "Hoeveel kost een kilo?",
+        en: "How much is a kilo?",
+        gloss: [
+          { target: "hoeveel kost", en: "how much costs" },
+          { target: "een kilo", en: "a kilo" },
+        ],
+        say: "hoo-VAYL kost un KEE-loh",
+      },
+      {
+        id: "dat-is-alles",
+        target: "Dat is alles, dank u.",
+        en: "That's everything, thank you.",
+        gloss: [
+          { target: "dat is", en: "that is" },
+          { target: "alles", en: "everything" },
+          { target: "dank u", en: "thank you (formal)" },
+        ],
+        say: "dat is AL-us, dank OO",
+        note: "How you close a market-stall transaction. At the till they'll ask 'Anders nog iets?' — anything else?",
+      },
+      {
+        id: "een-tasje",
+        target: "Mag ik een tasje?",
+        en: "Could I have a bag?",
+        gloss: [
+          { target: "mag ik", en: "may I" },
+          { target: "een tasje", en: "a small bag" },
+        ],
+        say: "makh ik un TAS-yuh",
+        note: "Bags cost money in Dutch shops, and nobody offers one unasked.",
+      },
+    ],
+    dialogue: [
+      { speaker: "you", target: "Pardon, waar vind ik het brood?", en: "Excuse me, where do I find the bread?", cue: "Excuse yourself and ask where the bread is." },
+      { speaker: "them", target: "Achterin, naast de kassa.", en: "At the back, next to the checkout." },
+      { speaker: "you", target: "Dank u wel. Heeft u ook vers brood?", en: "Thank you. Do you also have fresh bread?", cue: "Thank them, then ask if there's fresh bread." },
+      { speaker: "them", target: "Ja, dat komt om acht uur.", en: "Yes, that arrives at eight o'clock." },
+      { speaker: "you", target: "Prima, dank u.", en: "Fine, thank you.", cue: "Say that's fine and thank them." },
+    ],
+    roleplay:
+      "You work in a Dutch supermarket. The learner will ask where things are and what they cost. Give short, practical answers with aisle directions and prices. Ask 'Anders nog iets?' before they finish.",
+  },
+
+  // ── In de stad ────────────────────────────────────────────────────────────
+  {
+    id: "vervoer",
+    unit: "stad",
+    title: "Met de trein",
+    titleEn: "Getting around",
+    canDo: "Buy a ticket, find your platform, and check you're on the right train.",
+    level: "A1",
+    phrases: [
+      {
+        id: "kaartje-naar",
+        target: "Een kaartje naar Utrecht, alstublieft.",
+        en: "A ticket to Utrecht, please.",
+        gloss: [
+          { target: "een kaartje", en: "a ticket" },
+          { target: "naar Utrecht", en: "to Utrecht" },
+          { target: "alstublieft", en: "please" },
+        ],
+        register: "formal",
+        say: "un KAART-yuh naar OO-trekht, als-too-BLEEFT",
+        note: "'Naar' is 'to' when you're going somewhere. Don't reach for 'tot' — that's 'until'.",
+      },
+      {
+        id: "hoe-laat-vertrekt",
+        target: "Hoe laat vertrekt de trein?",
+        en: "What time does the train leave?",
+        gloss: [
+          { target: "hoe laat", en: "how late" },
+          { target: "vertrekt", en: "departs" },
+          { target: "de trein", en: "the train" },
+        ],
+        say: "hoo laat ver-TREKT duh TRAYN",
+      },
+      {
+        id: "welk-spoor",
+        target: "Welk spoor?",
+        en: "Which platform?",
+        gloss: [
+          { target: "welk", en: "which" },
+          { target: "spoor", en: "platform / track" },
+        ],
+        say: "velk SPOAR",
+        note: "'Welk' before het-words, 'welke' before de-words. 'Welk spoor' but 'welke trein' — the article decides.",
+      },
+      {
+        id: "moet-ik-overstappen",
+        target: "Moet ik overstappen?",
+        en: "Do I have to change trains?",
+        gloss: [
+          { target: "moet ik", en: "must I" },
+          { target: "overstappen", en: "to change / transfer" },
+        ],
+        say: "moot ik OH-ver-stap-un",
+        note: "A separable verb sitting whole at the end because 'moet' is doing the work up front.",
+      },
+      {
+        id: "met-de-fiets",
+        target: "Ik ga met de fiets.",
+        en: "I'm going by bike.",
+        gloss: [
+          { target: "ik ga", en: "I go" },
+          { target: "met de fiets", en: "with the bike" },
+        ],
+        say: "ik ghaa met duh FEETS",
+        pattern: {
+          template: "Ik ga met ___.",
+          templateEn: "I'm going by ___.",
+          slots: [
+            { target: "Ik ga met de fiets.", en: "by bike" },
+            { target: "Ik ga met de trein.", en: "by train" },
+            { target: "Ik ga met de bus.", en: "by bus" },
+            { target: "Ik ga te voet.", en: "on foot" },
+          ],
+        },
+        note: "Dutch says 'with the bike', not 'by bike'. And in the Netherlands this is the default answer.",
+      },
+      {
+        id: "is-deze-trein",
+        target: "Is deze trein naar Amsterdam?",
+        en: "Is this train to Amsterdam?",
+        gloss: [
+          { target: "is deze trein", en: "is this train" },
+          { target: "naar Amsterdam", en: "to Amsterdam" },
+        ],
+        say: "is DAY-zuh trayn naar AM-ster-dam",
+        note: "The question you ask on the platform thirty seconds before the doors close. Worth having ready.",
+      },
+    ],
+    dialogue: [
+      { speaker: "you", target: "Een kaartje naar Utrecht, alstublieft.", en: "A ticket to Utrecht, please.", cue: "Ask for a ticket to Utrecht." },
+      { speaker: "them", target: "Enkele reis of retour?", en: "One way or return?" },
+      { speaker: "you", target: "Enkele reis, graag.", en: "One way, please.", cue: "One way — add 'graag'." },
+      { speaker: "them", target: "Dat is elf euro vijftig. Spoor vijf.", en: "That's eleven euros fifty. Platform five." },
+      { speaker: "you", target: "Moet ik overstappen?", en: "Do I have to change trains?", cue: "Ask whether you need to change." },
+      { speaker: "them", target: "Nee, deze trein gaat rechtstreeks.", en: "No, this train goes direct." },
+    ],
+    roleplay:
+      "You are a ticket clerk at a Dutch railway station. Sell the learner a ticket: ask single or return, state a price and platform, and answer questions about changing trains and departure times.",
+  },
+
+  // ── Wonen ─────────────────────────────────────────────────────────────────
+  {
+    id: "huis",
+    unit: "wonen",
+    title: "Mijn huis",
+    titleEn: "My place",
+    canDo: "Describe where you live and show someone around.",
+    level: "A1",
+    phrases: [
+      {
+        id: "ik-woon-appartement",
+        target: "Ik woon in een appartement.",
+        en: "I live in a flat.",
+        gloss: [
+          { target: "ik woon in", en: "I live in" },
+          { target: "een appartement", en: "a flat" },
+        ],
+        say: "ik voan in un a-par-tuh-MENT",
+      },
+      {
+        id: "twee-slaapkamers",
+        target: "Het heeft twee slaapkamers.",
+        en: "It has two bedrooms.",
+        gloss: [
+          { target: "het heeft", en: "it has" },
+          { target: "twee slaapkamers", en: "two bedrooms" },
+        ],
+        say: "ut hayft tvay SLAAP-kaa-mers",
+        note: "'Slaapkamer' is sleep-room. Dutch builds compounds by gluing words together, and you can often guess them.",
+      },
+      {
+        id: "keuken-klein",
+        target: "De keuken is klein maar licht.",
+        en: "The kitchen is small but light.",
+        gloss: [
+          { target: "de keuken", en: "the kitchen" },
+          { target: "is klein", en: "is small" },
+          { target: "maar licht", en: "but light" },
+        ],
+        say: "duh KUH-kun is klayn maar LIKHT",
+      },
+      {
+        id: "waar-is-badkamer",
+        target: "Waar is de badkamer?",
+        en: "Where's the bathroom?",
+        gloss: [
+          { target: "waar is", en: "where is" },
+          { target: "de badkamer", en: "the bathroom" },
+        ],
+        say: "vaar is duh BAT-kaa-mer",
+        pattern: {
+          template: "Waar is ___?",
+          templateEn: "Where is ___?",
+          slots: [
+            { target: "Waar is de badkamer?", en: "the bathroom" },
+            { target: "Waar is de woonkamer?", en: "the living room" },
+            { target: "Waar is de tuin?", en: "the garden" },
+            { target: "Waar is het balkon?", en: "the balcony" },
+          ],
+        },
+      },
+      {
+        id: "kom-binnen",
+        target: "Kom binnen!",
+        en: "Come in!",
+        gloss: [
+          { target: "kom", en: "come" },
+          { target: "binnen", en: "inside" },
+        ],
+        say: "kom BIN-un",
+        note: "Two words, said constantly. The polite version is 'Komt u binnen'.",
+      },
+      {
+        id: "ik-woon-hier-graag",
+        target: "Ik woon hier graag.",
+        en: "I like living here.",
+        gloss: [
+          { target: "ik woon hier", en: "I live here" },
+          { target: "graag", en: "gladly" },
+        ],
+        say: "ik voan heer GHRAAKH",
+        note: "Dutch has no separate 'I like doing X' — you add 'graag' to the verb. 'Ik eet graag vis' is 'I like eating fish'.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Wat een leuk huis! Woon je hier alleen?", en: "What a nice house! Do you live here alone?" },
+      {
+        speaker: "you",
+        target: "Ja, ik woon in een appartement met twee slaapkamers.",
+        en: "Yes, I live in a flat with two bedrooms.",
+        cue: "Say yes, and describe your two-bedroom flat.",
+      },
+      { speaker: "them", target: "En de keuken?", en: "And the kitchen?" },
+      {
+        speaker: "you",
+        target: "De keuken is klein maar licht.",
+        en: "The kitchen is small but light.",
+        cue: "Say it's small but light.",
+      },
+      { speaker: "them", target: "Mag ik even naar het toilet?", en: "May I use the toilet?" },
+      {
+        speaker: "you",
+        target: "Natuurlijk, het is daar.",
+        en: "Of course, it's over there.",
+        cue: "Say of course, and point them there.",
+      },
+    ],
+    roleplay:
+      "You are visiting the learner's flat for the first time. Compliment it, ask about the rooms, how long they've lived there, and whether they like the neighbourhood. Keep your Dutch simple.",
+  },
+
+  // ── Winkelen en geld ──────────────────────────────────────────────────────
+  {
+    id: "geld",
+    unit: "winkelen",
+    title: "Betalen",
+    titleEn: "Paying",
+    canDo: "Handle the till: price, method, change, and pushing back on a price.",
+    level: "A1",
+    phrases: [
+      {
+        id: "kan-ik-kaart",
+        target: "Kan ik met de kaart betalen?",
+        en: "Can I pay by card?",
+        gloss: [
+          { target: "kan ik", en: "can I" },
+          { target: "met de kaart", en: "with the card" },
+          { target: "betalen", en: "to pay" },
+        ],
+        say: "kan ik met duh KAART buh-TAA-lun",
+        note: "Longer and clearer than 'Kan ik pinnen?', and understood everywhere. 'Pinnen' specifically means debit.",
+      },
+      {
+        id: "contant",
+        target: "Ik betaal contant.",
+        en: "I'll pay cash.",
+        gloss: [
+          { target: "ik betaal", en: "I pay" },
+          { target: "contant", en: "cash" },
+        ],
+        say: "ik buh-TAAL kon-TANT",
+        note: "Worth knowing, though many Dutch shops no longer take it at all.",
+      },
+      {
+        id: "te-duur",
+        target: "Dat is te duur.",
+        en: "That's too expensive.",
+        gloss: [
+          { target: "dat is", en: "that is" },
+          { target: "te duur", en: "too expensive" },
+        ],
+        say: "dat is tuh DUUR",
+        note: "'Te' before an adjective means 'too much'. Don't confuse it with 'te' before a verb, which means 'to'.",
+      },
+      {
+        id: "korting",
+        target: "Is er korting?",
+        en: "Is there a discount?",
+        gloss: [
+          { target: "is er", en: "is there" },
+          { target: "korting", en: "discount" },
+        ],
+        say: "is er KOR-ting",
+        note: "'Er' is a small word doing 'there' duty. It turns up constantly and rarely translates cleanly.",
+      },
+      {
+        id: "kleingeld",
+        target: "Heeft u kleingeld?",
+        en: "Do you have change?",
+        gloss: [
+          { target: "heeft u", en: "have you (formal)" },
+          { target: "kleingeld", en: "small change" },
+        ],
+        register: "formal",
+        say: "hayft oo KLAYN-ghelt",
+      },
+      {
+        id: "bonnetje",
+        target: "Mag ik het bonnetje?",
+        en: "Could I have the receipt?",
+        gloss: [
+          { target: "mag ik", en: "may I" },
+          { target: "het bonnetje", en: "the receipt" },
+        ],
+        say: "makh ik ut BON-uh-tyuh",
+        note: "A 'bon' is a receipt; the diminutive 'bonnetje' is what people actually say.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Dat is samen vierentwintig euro.", en: "That's twenty-four euros altogether." },
+      {
+        speaker: "you",
+        target: "Kan ik met de kaart betalen?",
+        en: "Can I pay by card?",
+        cue: "Ask whether you can pay by card.",
+      },
+      { speaker: "them", target: "Ja hoor. Wilt u het bonnetje?", en: "Sure. Would you like the receipt?" },
+      {
+        speaker: "you",
+        target: "Ja, graag.",
+        en: "Yes, please.",
+        cue: "Say yes please.",
+      },
+      { speaker: "them", target: "Alstublieft. Fijne dag!", en: "Here you are. Have a nice day!" },
+      { speaker: "you", target: "Dank u wel, u ook!", en: "Thank you, you too!", cue: "Thank them and wish it back." },
+    ],
+    roleplay:
+      "You are a shop assistant at the till. Tell the learner a total, handle their payment method, offer a receipt, and send them off warmly. Use a two-digit price so they have to parse a reversed number.",
+  },
+
+  // ── Dagelijkse routine ────────────────────────────────────────────────────
+  {
+    id: "routine",
+    unit: "routine",
+    title: "Mijn dag",
+    titleEn: "My day",
+    canDo: "Describe your daily routine — and meet Dutch word order head-on.",
+    level: "A1",
+    phrases: [
+      {
+        id: "ik-sta-op",
+        target: "Ik sta om zeven uur op.",
+        en: "I get up at seven.",
+        gloss: [
+          { target: "ik sta", en: "I stand" },
+          { target: "om zeven uur", en: "at seven o'clock" },
+          { target: "op", en: "up" },
+        ],
+        say: "ik staa om ZAY-vun uur OP",
+        note: "'Opstaan' is one verb, but it splits: 'sta' goes second, 'op' goes last, and the time sits between them. This splitting is the single most Dutch thing about Dutch.",
+      },
+      {
+        id: "dan-ontbijt",
+        target: "Daarna ontbijt ik.",
+        en: "After that I have breakfast.",
+        gloss: [
+          { target: "daarna", en: "after that" },
+          { target: "ontbijt ik", en: "breakfast I" },
+        ],
+        say: "daar-NAA ont-BAYT ik",
+        note: "Start a sentence with anything other than the subject and the verb still has to come second — so 'ik' gets pushed behind it. Not optional, and it will feel wrong for months.",
+      },
+      {
+        id: "ik-werk-van-tot",
+        target: "Ik werk van negen tot vijf.",
+        en: "I work from nine to five.",
+        gloss: [
+          { target: "ik werk", en: "I work" },
+          { target: "van negen", en: "from nine" },
+          { target: "tot vijf", en: "until five" },
+        ],
+        say: "ik verk van NAY-ghun tot VAYF",
+      },
+      {
+        id: "s-avonds",
+        target: "'s Avonds kook ik.",
+        en: "In the evening I cook.",
+        gloss: [
+          { target: "'s avonds", en: "in the evening" },
+          { target: "kook ik", en: "cook I" },
+        ],
+        say: "SAA-vonts koak ik",
+        note: "Another inversion. The apostrophe is a shrunken 'des' — an old genitive nobody thinks about any more.",
+        pattern: {
+          template: "___ kook ik.",
+          templateEn: "Time expressions that trigger inversion",
+          slots: [
+            { target: "'s Avonds kook ik.", en: "in the evening" },
+            { target: "'s Morgens werk ik.", en: "in the morning" },
+            { target: "Vandaag werk ik niet.", en: "today I'm not working" },
+            { target: "Morgen ga ik zwemmen.", en: "tomorrow I'm going swimming" },
+          ],
+        },
+      },
+      {
+        id: "naar-bed",
+        target: "Ik ga om elf uur naar bed.",
+        en: "I go to bed at eleven.",
+        gloss: [
+          { target: "ik ga", en: "I go" },
+          { target: "om elf uur", en: "at eleven o'clock" },
+          { target: "naar bed", en: "to bed" },
+        ],
+        say: "ik ghaa om elf uur naar BET",
+      },
+      {
+        id: "wat-doe-je-weekend",
+        target: "Wat doe je in het weekend?",
+        en: "What do you do at the weekend?",
+        gloss: [
+          { target: "wat doe je", en: "what do you" },
+          { target: "in het weekend", en: "in the weekend" },
+        ],
+        register: "informal",
+        say: "vat DOO yuh in ut VEE-kunt",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Hoe laat sta je meestal op?", en: "What time do you usually get up?" },
+      {
+        speaker: "you",
+        target: "Ik sta om zeven uur op.",
+        en: "I get up at seven.",
+        cue: "Say you get up at seven — remember 'op' goes last.",
+      },
+      { speaker: "them", target: "Zo vroeg! En werk je de hele dag?", en: "So early! And do you work all day?" },
+      {
+        speaker: "you",
+        target: "Ik werk van negen tot vijf.",
+        en: "I work from nine to five.",
+        cue: "Say you work from nine to five.",
+      },
+      { speaker: "them", target: "En 's avonds?", en: "And in the evening?" },
+      {
+        speaker: "you",
+        target: "'s Avonds kook ik.",
+        en: "In the evening I cook.",
+        cue: "Say that in the evening you cook — the verb comes before 'ik'.",
+      },
+    ],
+    roleplay:
+      "You are a Dutch friend curious about the learner's daily routine. Ask when they get up, how they get to work, when they finish, and what they do in the evening. Use separable verbs like opstaan and aankomen naturally.",
+  },
+
+  // ── Weer en seizoenen ─────────────────────────────────────────────────────
+  {
+    id: "weer",
+    unit: "weer",
+    title: "Wat voor weer is het?",
+    titleEn: "What's the weather like?",
+    canDo: "Make the small talk that fills every Dutch pause.",
+    level: "A1",
+    phrases: [
+      {
+        id: "wat-voor-weer",
+        target: "Wat voor weer is het?",
+        en: "What's the weather like?",
+        gloss: [
+          { target: "wat voor", en: "what kind of" },
+          { target: "weer", en: "weather" },
+          { target: "is het", en: "is it" },
+        ],
+        say: "vat voor VAYR is ut",
+      },
+      {
+        id: "het-regent",
+        target: "Het regent.",
+        en: "It's raining.",
+        gloss: [
+          { target: "het", en: "it" },
+          { target: "regent", en: "rains" },
+        ],
+        say: "ut RAY-ghunt",
+        note: "Weather verbs take a meaningless 'het', exactly like English 'it'. You'll use this one a lot.",
+        pattern: {
+          template: "Het ___.",
+          templateEn: "It's ___.",
+          slots: [
+            { target: "Het regent.", en: "raining" },
+            { target: "Het sneeuwt.", en: "snowing" },
+            { target: "Het waait.", en: "windy" },
+            { target: "De zon schijnt.", en: "the sun is shining" },
+          ],
+        },
+      },
+      {
+        id: "het-is-koud",
+        target: "Het is koud vandaag.",
+        en: "It's cold today.",
+        gloss: [
+          { target: "het is", en: "it is" },
+          { target: "koud", en: "cold" },
+          { target: "vandaag", en: "today" },
+        ],
+        say: "ut is kowt van-DAAKH",
+      },
+      {
+        id: "lekker-weer",
+        target: "Lekker weer, hè?",
+        en: "Lovely weather, isn't it?",
+        gloss: [
+          { target: "lekker", en: "nice / pleasant" },
+          { target: "weer", en: "weather" },
+          { target: "hè", en: "eh / isn't it" },
+        ],
+        say: "LEK-ker vayr, HEH",
+        note: "'Lekker' means tasty for food and pleasant for everything else. 'Hè' on the end turns any statement into an invitation to agree — the most Dutch conversational move there is.",
+      },
+      {
+        id: "morgen-wordt-mooi",
+        target: "Morgen wordt het mooi weer.",
+        en: "Tomorrow the weather will be nice.",
+        gloss: [
+          { target: "morgen", en: "tomorrow" },
+          { target: "wordt het", en: "becomes it" },
+          { target: "mooi weer", en: "nice weather" },
+        ],
+        say: "MOR-ghun vort ut moy VAYR",
+        note: "Inversion again: 'morgen' comes first, so 'wordt' jumps ahead of 'het'.",
+      },
+      {
+        id: "jas-mee",
+        target: "Neem een jas mee.",
+        en: "Take a coat with you.",
+        gloss: [
+          { target: "neem", en: "take" },
+          { target: "een jas", en: "a coat" },
+          { target: "mee", en: "along" },
+        ],
+        say: "naym un yas MAY",
+        note: "'Meenemen' splitting again — 'neem' at the front, 'mee' at the back.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Wat een regen, hè?", en: "What rain, eh?" },
+      {
+        speaker: "you",
+        target: "Ja, het is koud vandaag.",
+        en: "Yes, it's cold today.",
+        cue: "Agree, and add that it's cold today.",
+      },
+      { speaker: "them", target: "Maar morgen wordt het mooi weer.", en: "But tomorrow the weather will be nice." },
+      {
+        speaker: "you",
+        target: "Wat voor weer is het dan?",
+        en: "What's the weather going to be then?",
+        cue: "Ask what the weather will be like then.",
+      },
+      { speaker: "them", target: "Zon, twintig graden!", en: "Sun, twenty degrees!" },
+      { speaker: "you", target: "Lekker!", en: "Lovely!", cue: "One word — say that's lovely." },
+    ],
+    roleplay:
+      "You are a Dutch neighbour making small talk about the weather at the bike rack. Complain mildly about rain or wind, mention the forecast, and keep the exchange going for three or four turns.",
+  },
+
+  // ── Afspraken maken ───────────────────────────────────────────────────────
+  {
+    id: "afspraken",
+    unit: "afspraken",
+    title: "Zullen we afspreken?",
+    titleEn: "Shall we meet up?",
+    canDo: "Invite someone, accept, or say no without sounding rude.",
+    level: "A1",
+    phrases: [
+      {
+        id: "heb-je-zin",
+        target: "Heb je zin om koffie te drinken?",
+        en: "Do you fancy getting a coffee?",
+        gloss: [
+          { target: "heb je zin", en: "have you desire" },
+          { target: "om", en: "to" },
+          { target: "koffie te drinken", en: "coffee to drink" },
+        ],
+        register: "informal",
+        say: "hep yuh ZIN om KOF-ee tuh DRIN-kun",
+        note: "'Zin hebben in' is the everyday way to say you fancy something. The verb goes to the end after 'om … te'.",
+      },
+      {
+        id: "zullen-we",
+        target: "Zullen we vrijdag afspreken?",
+        en: "Shall we meet up on Friday?",
+        gloss: [
+          { target: "zullen we", en: "shall we" },
+          { target: "vrijdag", en: "Friday" },
+          { target: "afspreken", en: "to meet up" },
+        ],
+        say: "ZUL-un vuh VRAY-dakh AF-spray-kun",
+        pattern: {
+          template: "Zullen we ___ afspreken?",
+          templateEn: "Shall we meet on ___?",
+          slots: [
+            { target: "Zullen we vrijdag afspreken?", en: "Friday" },
+            { target: "Zullen we zaterdag afspreken?", en: "Saturday" },
+            { target: "Zullen we zondag afspreken?", en: "Sunday" },
+            { target: "Zullen we volgende week afspreken?", en: "next week" },
+          ],
+        },
+      },
+      {
+        id: "dat-is-goed",
+        target: "Ja, dat is goed.",
+        en: "Yes, that works.",
+        gloss: [
+          { target: "ja", en: "yes" },
+          { target: "dat is goed", en: "that is good" },
+        ],
+        say: "yaa, dat is GHOOT",
+      },
+      {
+        id: "ik-kan-niet",
+        target: "Sorry, ik kan niet.",
+        en: "Sorry, I can't.",
+        gloss: [
+          { target: "sorry", en: "sorry" },
+          { target: "ik kan niet", en: "I can not" },
+        ],
+        say: "sorry, ik kan NEET",
+        note: "Dutch declining is blunt by English standards. 'Sorry, ik kan niet' is complete and perfectly polite — no elaborate excuse expected.",
+      },
+      {
+        id: "misschien-volgende",
+        target: "Misschien volgende week?",
+        en: "Maybe next week?",
+        gloss: [
+          { target: "misschien", en: "maybe" },
+          { target: "volgende week", en: "next week" },
+        ],
+        say: "mis-SKHEEN VOL-ghun-duh VAYK",
+      },
+      {
+        id: "hoe-laat-spreken-we-af",
+        target: "Hoe laat spreken we af?",
+        en: "What time shall we meet?",
+        gloss: [
+          { target: "hoe laat", en: "how late" },
+          { target: "spreken we af", en: "meet we up" },
+        ],
+        say: "hoo laat SPRAY-kun vuh AF",
+        note: "'Afspreken' splits here because there's no other verb to hide behind: 'spreken' second, 'af' last.",
+      },
+    ],
+    dialogue: [
+      { speaker: "them", target: "Heb je zin om koffie te drinken?", en: "Do you fancy getting a coffee?" },
+      {
+        speaker: "you",
+        target: "Ja, leuk! Wanneer?",
+        en: "Yes, nice! When?",
+        cue: "Accept enthusiastically and ask when.",
+      },
+      { speaker: "them", target: "Zullen we vrijdag afspreken?", en: "Shall we meet up on Friday?" },
+      {
+        speaker: "you",
+        target: "Vrijdag kan ik niet. Misschien zaterdag?",
+        en: "I can't on Friday. Maybe Saturday?",
+        cue: "Friday doesn't work — suggest Saturday instead.",
+      },
+      { speaker: "them", target: "Zaterdag is prima. Hoe laat?", en: "Saturday is fine. What time?" },
+      {
+        speaker: "you",
+        target: "Om drie uur?",
+        en: "At three?",
+        cue: "Propose three o'clock.",
+      },
+    ],
+    roleplay:
+      "You are a Dutch friend trying to arrange a coffee with the learner. Suggest days and times, react when they can't make one, and settle on something. Use zullen we, heb je zin, and afspreken.",
+  },
+];

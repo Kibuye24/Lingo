@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --surface: #ffffff;
+  --surface-sunk: #f6f7f9;
+  --foreground: #16181d;
+  --muted: #6b7280;
+  --line: #e5e7eb;
+  --accent: #e2560f;
+  --accent-soft: #fff0e6;
+  --locked: #d1d5db;
+  --good: #15803d;
+  --good-soft: #dcf3e3;
+  --warn: #a16207;
+  --warn-soft: #fbf0d0;
+  --bad: #b91c1c;
+  --bad-soft: #fbdedb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-sunk: var(--surface-sunk);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-locked: var(--locked);
+  --font-sans: var(--font-sans-var);
+  --font-mono: var(--font-mono-var);
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans-var), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Target-language text gets a hair more space to breathe — it is read aloud, not skimmed. */
+.target {
+  letter-spacing: -0.011em;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent); }
+  70% { box-shadow: 0 0 0 18px color-mix(in oklab, var(--accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 0%, transparent); }
+}
+
+.listening {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listening {
+    animation: none;
+  }
+}

@@ -1,0 +1,80 @@
+import type { SoundDrill } from "@/lib/types";
+
+/** The sounds that make French hard for English speakers, in the order worth learning them. */
+export const soundDrills: SoundDrill[] = [
+  {
+    id: "r",
+    symbol: "r",
+    name: "The French r",
+    how: "It happens at the back of the throat, not the front of the mouth. Start with a soft gargle — the same place you make the Dutch g or the ch in Scottish 'loch' — then relax it until it's a light purr.",
+    trap: "Using the English r, where the tongue curls up in the middle of the mouth. The French r never involves the tongue tip at all.",
+    words: [
+      { target: "rouge", en: "red" },
+      { target: "merci", en: "thank you" },
+      { target: "Paris", en: "Paris" },
+      { target: "très", en: "very" },
+      { target: "bonjour", en: "hello" },
+    ],
+    tongueTwister: "Trois rats regardent la rue.",
+  },
+  {
+    id: "u-ou",
+    symbol: "u ↔ ou",
+    name: "tu versus tout",
+    how: "For 'ou' say the English 'oo' in 'food'. For 'u', say 'ee' and then round your lips tightly without moving your tongue. The tongue stays forward for u and pulls back for ou.",
+    trap: "Turning both into 'oo'. 'Tu' (you) and 'tout' (everything) become the same word, and 'dessus' and 'dessous' mean opposite things.",
+    words: [
+      { target: "tu", en: "you" },
+      { target: "tout", en: "everything" },
+      { target: "salut", en: "hi" },
+      { target: "vous", en: "you (formal)" },
+      { target: "rue", en: "street" },
+    ],
+    tongueTwister: "Tu as vu tout sous la rue ?",
+  },
+  {
+    id: "nasales",
+    symbol: "on / an / in",
+    name: "The nasal vowels",
+    how: "Let the air out through your nose while saying the vowel, and never actually close your mouth on the n. The n is a direction, not a consonant — it should not be audible on its own.",
+    trap: "Pronouncing the n. 'Bon' is not 'bonn'; the word ends on the vowel with the air redirected. English has no equivalent, so it needs deliberate practice.",
+    words: [
+      { target: "bon", en: "good" },
+      { target: "blanc", en: "white" },
+      { target: "vin", en: "wine" },
+      { target: "enchanté", en: "pleased to meet you" },
+      { target: "comment", en: "how" },
+    ],
+    tongueTwister: "Un bon vin blanc.",
+  },
+  {
+    id: "muet",
+    symbol: "‑e, ‑s, ‑t",
+    name: "The endings you don't say",
+    how: "Final consonants in French are usually silent, and a final -e is too. 'Salut' ends on the u. 'Petit' ends on the i. 'Grande' ends on the d because the -e makes the consonant before it sound.",
+    trap: "Reading French the way it's written. English speakers pronounce every letter and become unintelligible — the written word is a much longer object than the spoken one.",
+    words: [
+      { target: "salut", en: "hi" },
+      { target: "petit", en: "small" },
+      { target: "français", en: "French" },
+      { target: "beaucoup", en: "a lot" },
+      { target: "grande", en: "big (feminine)" },
+    ],
+    tongueTwister: "Le petit chat gris est parti.",
+  },
+  {
+    id: "liaison",
+    symbol: "liaison",
+    name: "Joining words together",
+    how: "A silent final consonant wakes up when the next word starts with a vowel. 'Vous' alone ends on the u, but 'vous avez' becomes 'voo-za-vay'. The consonant hops onto the next word.",
+    trap: "Leaving gaps between words. French is spoken in phrases, not words — breaking the liaison makes fluent French sound like a list.",
+    words: [
+      { target: "vous avez", en: "you have" },
+      { target: "nous allons", en: "we go" },
+      { target: "les amis", en: "the friends" },
+      { target: "un petit ami", en: "a boyfriend" },
+      { target: "comment allez-vous", en: "how are you" },
+    ],
+    tongueTwister: "Nous avons eu un très bon accueil.",
+  },
+];
