@@ -136,7 +136,7 @@ export const lexicon: LexiconEntry[] = [
   { lemma: "wonen", pos: "verb", en: "to live / reside", participle: "gewoond", forms: ["woon", "woont", "woonde", "woonden"], source: "curated" },
   { lemma: "spreken", pos: "verb", en: "to speak", participle: "gesproken", flags: ["irregular"], forms: ["spreek", "spreekt"], source: "curated" },
   { lemma: "praten", pos: "verb", en: "to talk", participle: "gepraat", forms: ["praat", "praatte", "praatten"], source: "curated" },
-  { lemma: "zeggen", pos: "verb", en: "to say", participle: "gezegd", forms: ["zeg", "zegt"], source: "curated" },
+  { lemma: "zeggen", pos: "verb", en: "to say", participle: "gezegd", forms: ["zeg", "zegt", "zei", "zeiden"], source: "curated" },
   { lemma: "doen", pos: "verb", en: "to do", participle: "gedaan", flags: ["irregular"], forms: ["doe", "doet", "deed", "deden"], source: "curated" },
   { lemma: "begrijpen", pos: "verb", en: "to understand", participle: "begrepen", flags: ["irregular"], forms: ["begrijp", "begrijpt"], source: "curated" },
   { lemma: "betekenen", pos: "verb", en: "to mean", participle: "betekend", forms: ["betekent"], source: "curated" },

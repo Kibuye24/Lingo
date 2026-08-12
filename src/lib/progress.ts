@@ -34,6 +34,12 @@ export interface PhraseRecord {
   /** ISO date string. */
   dueAt: string;
   lastSeenAt: string;
+  /**
+   * Full ISO timestamp of the last write. Drives last-write-wins when the
+   * same phrase was practised on two devices. Optional for records written
+   * before sync existed — those are treated as oldest.
+   */
+  updatedAt?: string;
 }
 
 export interface Progress {
@@ -153,6 +159,7 @@ export function recordAttempt(
     attempts: (existing?.attempts ?? 0) + 1,
     dueAt: addDays(INTERVALS[streak]),
     lastSeenAt: today(),
+    updatedAt: new Date().toISOString(),
   };
 
   progress.phrases[key] = record;
@@ -168,6 +175,14 @@ export function markLessonComplete(lang: string, lessonId: string) {
     progress.lessonsCompleted.push(key);
     save(progress);
   }
+}
+
+/**
+ * Overwrite the whole local store — used by the sync layer after merging
+ * remote state in. Goes through `save()` so subscribers re-render.
+ */
+export function replaceProgress(progress: Progress) {
+  save(progress);
 }
 
 export function resetProgress() {

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useActiveProfileId, useHydrated, useProfiles } from "@/lib/hooks";
+import AuthPanel from "./AuthPanel";
 import { addProfile, setActiveProfile } from "@/lib/profiles";
 
 /**
@@ -110,6 +111,10 @@ export default function ProfileSwitcher() {
                 <span>Nieuw profiel · Add someone</span>
               </button>
             )}
+          </div>
+
+          <div className="mt-1 border-t border-line pt-1">
+            <AuthPanel />
           </div>
         </div>
       )}

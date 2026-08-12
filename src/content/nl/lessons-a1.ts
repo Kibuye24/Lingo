@@ -89,6 +89,28 @@ export const lessonsA1: Lesson[] = [
         note: "What a waiter asks at the door. The answer is just a number: 'Met z'n tweeën' or simply 'Twee'.",
       },
       {
+        id: "nummer-is",
+        target: "Mijn nummer is nul zes...",
+        en: "My number is oh six...",
+        gloss: [
+          { target: "mijn nummer", en: "my number" },
+          { target: "is", en: "is" },
+          { target: "nul zes", en: "zero six" },
+        ],
+        say: "mayn NUM-mer is nul zes",
+        note: "Every Dutch mobile starts 06. Numbers are read in pairs, so practise them two at a time.",
+      },
+      {
+        id: "de-eerste-keer",
+        target: "Dit is de eerste keer.",
+        en: "This is the first time.",
+        gloss: [
+          { target: "dit is", en: "this is" },
+          { target: "de eerste keer", en: "the first time" },
+        ],
+        say: "dit is duh AYR-stuh KAYR",
+      },
+      {
         id: "ik-ben-jaar",
         target: "Ik ben tweeëndertig jaar oud.",
         en: "I'm thirty-two years old.",
@@ -191,6 +213,27 @@ export const lessonsA1: Lesson[] = [
         ],
         say: "om hoo LAAT buh-GHINT ut",
         note: "'Om' is the 'at' of clock times: om acht uur, om half negen.",
+      },
+      {
+        id: "hoe-lang-duurt-het",
+        target: "Hoe lang duurt het?",
+        en: "How long does it take?",
+        gloss: [
+          { target: "hoe lang", en: "how long" },
+          { target: "duurt het", en: "lasts it" },
+        ],
+        say: "hoo LANG duurt ut",
+      },
+      {
+        id: "ik-heb-geen-tijd",
+        target: "Ik heb geen tijd.",
+        en: "I don't have time.",
+        gloss: [
+          { target: "ik heb", en: "I have" },
+          { target: "geen tijd", en: "no time" },
+        ],
+        say: "ik hep khayn TAYT",
+        note: "'Geen' not 'niet' — you're negating a noun with no article. See the negation grammar point.",
       },
       {
         id: "ik-ben-te-laat",
@@ -307,6 +350,28 @@ export const lessonsA1: Lesson[] = [
         say: "ben yuh khuh-TROWT",
       },
       {
+        id: "hoe-heet-je-broer",
+        target: "Hoe heet je broer?",
+        en: "What's your brother called?",
+        gloss: [
+          { target: "hoe heet", en: "how is called" },
+          { target: "je broer", en: "your brother" },
+        ],
+        register: "informal",
+        say: "hoo HAYT yuh BROOR",
+      },
+      {
+        id: "wij-zijn-met-vijf",
+        target: "Wij zijn met vijf thuis.",
+        en: "There are five of us at home.",
+        gloss: [
+          { target: "wij zijn", en: "we are" },
+          { target: "met vijf", en: "with five" },
+          { target: "thuis", en: "at home" },
+        ],
+        say: "vay zayn met VAYF towss",
+      },
+      {
         id: "ik-woon-alleen",
         target: "Ik woon alleen.",
         en: "I live alone.",
@@ -417,6 +482,27 @@ export const lessonsA1: Lesson[] = [
         register: "formal",
         say: "vat kunt oo AAN-buh-vay-lun",
         note: "The verb lands at the very end. That pattern — modal near the front, main verb at the back — runs through all of Dutch.",
+      },
+      {
+        id: "iets-te-drinken",
+        target: "Wilt u iets te drinken?",
+        en: "Would you like something to drink?",
+        gloss: [
+          { target: "wilt u", en: "want you (formal)" },
+          { target: "iets", en: "something" },
+          { target: "te drinken", en: "to drink" },
+        ],
+        register: "formal",
+        say: "vilt oo eets tuh DRIN-kun",
+        note: "You'll hear this before you've opened the menu. Have an answer ready.",
+      },
+      {
+        id: "smakelijk",
+        target: "Smakelijk!",
+        en: "Enjoy your meal!",
+        gloss: [{ target: "smakelijk", en: "tasty" }],
+        say: "SMAA-kuh-luk",
+        note: "Said to anyone about to eat, including strangers at the next table. There is no real English equivalent.",
       },
       {
         id: "het-was-heerlijk",
@@ -629,6 +715,28 @@ export const lessonsA1: Lesson[] = [
           ],
         },
         note: "Dutch says 'with the bike', not 'by bike'. And in the Netherlands this is the default answer.",
+      },
+      {
+        id: "waar-moet-ik-uitstappen",
+        target: "Waar moet ik uitstappen?",
+        en: "Where do I have to get off?",
+        gloss: [
+          { target: "waar", en: "where" },
+          { target: "moet ik", en: "must I" },
+          { target: "uitstappen", en: "to get off" },
+        ],
+        say: "vaar moot ik OWT-stap-un",
+      },
+      {
+        id: "de-trein-is-vertraagd",
+        target: "De trein is vertraagd.",
+        en: "The train is delayed.",
+        gloss: [
+          { target: "de trein", en: "the train" },
+          { target: "is vertraagd", en: "is delayed" },
+        ],
+        say: "duh trayn is ver-TRAAKHT",
+        note: "You will hear this word more than you expect. Learn it as a sound, not a spelling.",
       },
       {
         id: "is-deze-trein",
