@@ -34,7 +34,7 @@ function pickModel(): { model: LanguageModel } | { error: string } {
 
   if (geminiKey) {
     const google = createGoogleGenerativeAI({ apiKey: geminiKey });
-    return { model: google("gemini-2.5-flash-lite") };
+    return { model: google("gemini-3.6-flash") };
   }
 
   if (process.env.AI_GATEWAY_API_KEY) {
