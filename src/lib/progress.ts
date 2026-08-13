@@ -223,3 +223,21 @@ export function streakDays(progress: Progress): number {
   }
   return count;
 }
+
+/**
+ * The last seven days, oldest first, flagged for whether anything was
+ * practised — the data behind the Mon–Sun dots on the home screen.
+ */
+export function weekActivity(progress: Progress): { day: string; label: string; done: boolean }[] {
+  const labels = ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"];
+  const active = new Set(progress.activeDays);
+  const out: { day: string; label: string; done: boolean }[] = [];
+
+  for (let back = 6; back >= 0; back--) {
+    const date = new Date();
+    date.setDate(date.getDate() - back);
+    const iso = date.toISOString().slice(0, 10);
+    out.push({ day: iso, label: labels[date.getDay()], done: active.has(iso) });
+  }
+  return out;
+}

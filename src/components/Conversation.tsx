@@ -4,16 +4,25 @@ import { useChat } from "@ai-sdk/react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AudioButton from "./AudioButton";
+import { MicIcon, SendIcon } from "./Icons";
 import { allPhrases } from "@/content";
 import { useHydrated, useProgress } from "@/lib/hooks";
 import { listen, recognitionSupported, speak, type Listener } from "@/lib/speech";
 import { targetIsComplete, parseTutorReply } from "@/lib/tutorReply";
 import type { LanguageConfig } from "@/lib/types";
 
+/**
+ * Voice-first tutor screen.
+ *
+ * Built around the mic rather than the keyboard: the whole point is speaking,
+ * so the mic is the largest control and typing is the fallback. The empty
+ * state says "tap to speak" instead of showing a text cursor for the same
+ * reason.
+ */
 export default function Conversation({ language }: { language: LanguageConfig }) {
   const params = useSearchParams();
   const initialLesson = params.get("lesson") ?? "";
-  const { ui, locale, code, lessons, nameEn } = language;
+  const { ui, locale, code, lessons, nameEn, name } = language;
 
   const [scenarioId, setScenarioId] = useState(initialLesson);
   const [input, setInput] = useState("");
@@ -94,41 +103,63 @@ export default function Conversation({ language }: { language: LanguageConfig })
   };
 
   const busy = status === "submitted" || status === "streaming";
+  const empty = messages.length === 0;
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-surface p-3">
-        <label className="text-sm text-muted">
-          {ui.situation}
+    <div className="flex min-h-[calc(100vh-11rem)] flex-col">
+      {/* Tutor identity */}
+      <div className="flex items-center gap-3 rounded-3xl border border-line bg-surface p-3">
+        <span
+          aria-hidden
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-accent to-[#b8410b] text-lg text-white"
+        >
+          {language.flag}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-semibold leading-tight">Tutor · {name}</p>
           <select
             value={scenarioId}
             onChange={(event) => setScenarioId(event.target.value)}
-            className="ml-2 rounded-lg border border-line bg-background px-2 py-1.5 text-sm text-foreground"
+            className="-ml-1 max-w-full truncate bg-transparent text-xs text-muted outline-none"
           >
             <option value="">{ui.freeChat}</option>
             {lessons.map((lesson) => (
               <option key={lesson.id} value={lesson.id}>
-                {lesson.title} — {lesson.titleEn}
+                {lesson.title}
               </option>
             ))}
           </select>
-        </label>
-        <label className="ml-auto flex items-center gap-2 text-sm text-muted">
-          <input
-            type="checkbox"
-            checked={autoSpeak}
-            onChange={(event) => setAutoSpeak(event.target.checked)}
-            className="accent-[var(--accent)]"
-          />
-          {ui.speakReplies}
-        </label>
+        </div>
+        <button
+          onClick={() => setAutoSpeak((on) => !on)}
+          aria-pressed={autoSpeak}
+          title={ui.speakReplies}
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors ${
+            autoSpeak
+              ? "border-accent bg-accent-soft text-accent"
+              : "border-line text-muted hover:text-foreground"
+          }`}
+        >
+          🔊
+        </button>
       </div>
 
-      <div className="min-h-[24rem] space-y-4 rounded-2xl border border-line bg-surface p-5">
-        {messages.length === 0 && (
-          <div className="space-y-3 py-8 text-center text-muted">
-            <p className="text-2xl">💬</p>
-            <p>
+      {/* Conversation */}
+      <div className="flex-1 space-y-3 py-4">
+        {empty && (
+          <div className="flex flex-col items-center gap-3 py-12 text-center">
+            <span
+              aria-hidden
+              className={`grid h-24 w-24 place-items-center rounded-full bg-gradient-to-br from-accent to-[#b8410b] text-4xl text-white ${
+                listening ? "listening" : ""
+              }`}
+            >
+              {language.flag}
+            </span>
+            <p className="font-medium">
+              {micSupported ? "Tik op de microfoon" : "Typ om te beginnen"}
+            </p>
+            <p className="max-w-[16rem] text-sm text-muted">
               {scenario
                 ? "Say hello to open the scene."
                 : `Start with a greeting — anything in ${nameEn} will do.`}
@@ -144,22 +175,29 @@ export default function Conversation({ language }: { language: LanguageConfig })
           if (message.role === "user") {
             return (
               <div key={message.id} className="flex justify-end">
-                <p className="target max-w-[85%] rounded-2xl bg-accent-soft px-4 py-2.5">
+                <p className="target max-w-[80%] rounded-2xl rounded-br-md bg-accent px-4 py-2.5 text-white">
                   {raw}
                 </p>
               </div>
             );
           }
-
           return <TutorMessage key={message.id} raw={raw} language={language} />;
         })}
 
-        {busy && <p className="text-sm text-muted">…</p>}
+        {busy && (
+          <div className="flex justify-start">
+            <div className="flex gap-1 rounded-2xl rounded-bl-md border border-line bg-surface px-4 py-3">
+              <Dot delay="0ms" />
+              <Dot delay="150ms" />
+              <Dot delay="300ms" />
+            </div>
+          </div>
+        )}
 
         {error && (
-          <p className="rounded-lg bg-bad-soft px-3 py-2 text-sm text-bad">
+          <p className="rounded-xl bg-bad-soft px-3 py-2 text-sm text-bad">
             {error.message.includes("501") || error.message.includes("AI_GATEWAY")
-              ? "Conversation mode needs an AI Gateway key in .env.local. Everything else in the app works without one."
+              ? "Conversation mode needs an AI Gateway key. Everything else in the app works without one."
               : error.message}
           </p>
         )}
@@ -168,61 +206,54 @@ export default function Conversation({ language }: { language: LanguageConfig })
       </div>
 
       {micError && (
-        <p className="rounded-lg bg-bad-soft px-3 py-2 text-sm text-bad">{micError}</p>
+        <p className="mb-2 rounded-xl bg-bad-soft px-3 py-2 text-sm text-bad">{micError}</p>
       )}
 
+      {/* Composer — mic first, typing as the fallback */}
       <form
         onSubmit={(event) => {
           event.preventDefault();
           send(input);
         }}
-        className="flex items-center gap-2"
+        className="sticky bottom-20 flex items-center gap-2 rounded-full border border-line bg-surface p-1.5 shadow-sm"
       >
         {micSupported && (
           <button
             type="button"
             onClick={toggleMic}
             aria-label={listening ? "Stop listening" : `Speak in ${nameEn}`}
-            className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl transition-colors ${
-              listening
-                ? "listening bg-accent text-white"
-                : "border border-line bg-surface hover:border-accent hover:text-accent"
+            className={`grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors ${
+              listening ? "listening bg-accent text-white" : "bg-accent-soft text-accent"
             }`}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <rect
-                x="9"
-                y="3"
-                width="6"
-                height="11"
-                rx="3"
-                stroke="currentColor"
-                strokeWidth="1.8"
-              />
-              <path
-                d="M5 11a7 7 0 0 0 14 0M12 18v3"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-            </svg>
+            <MicIcon className="h-5 w-5" />
           </button>
         )}
         <input
           value={input}
           onChange={(event) => setInput(event.target.value)}
           placeholder={listening ? ui.listening : ui.inputPlaceholder}
-          className="target h-12 flex-1 rounded-xl border border-line bg-surface px-4 outline-none focus:border-accent"
+          className="target h-11 min-w-0 flex-1 bg-transparent px-1 outline-none"
         />
         <button
           type="submit"
           disabled={busy || !input.trim()}
-          className="h-12 rounded-xl bg-accent px-5 font-medium text-white disabled:opacity-40"
+          aria-label={ui.send}
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent text-white transition-opacity disabled:opacity-30"
         >
-          {ui.send}
+          <SendIcon className="h-5 w-5" />
         </button>
       </form>
     </div>
+  );
+}
+
+function Dot({ delay }: { delay: string }) {
+  return (
+    <span
+      className="h-2 w-2 animate-bounce rounded-full bg-muted"
+      style={{ animationDelay: delay }}
+    />
   );
 }
 
@@ -233,7 +264,7 @@ function TutorMessage({ raw, language }: { raw: string; language: LanguageConfig
 
   return (
     <div className="flex justify-start">
-      <div className="max-w-[85%] space-y-2 rounded-2xl border border-line bg-sunk px-4 py-3">
+      <div className="max-w-[85%] space-y-2 rounded-2xl rounded-bl-md border border-line bg-surface px-4 py-3">
         <p className="target text-lg leading-snug">{reply.target}</p>
 
         <div className="flex flex-wrap items-center gap-2">

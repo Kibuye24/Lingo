@@ -10,6 +10,48 @@ type Props = { className?: string };
 
 const base = "h-6 w-6";
 
+export function HomeIcon({ className }: Props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
+      <path
+        d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19v-8.5Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path d="M9.5 20.5v-6h5v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function FlameIcon({ className }: Props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
+      <path
+        d="M12 3s5 4 5 8.5a5 5 0 0 1-10 0C7 9 9 7.5 9 7.5S9.5 10 11 10c1.2 0 1-3.5 1-7Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function MicIcon({ className }: Props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
+      <rect x="9" y="3" width="6" height="11" rx="3" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function SendIcon({ className }: Props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
+      <path d="M4 12 20 4l-8 16-2-6-6-2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function PathIcon({ className }: Props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
