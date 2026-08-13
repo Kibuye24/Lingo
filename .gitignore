@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Wiktionary build cache — large, regenerable, never shipped
 data/
+
+# Supabase CLI scratch state (link target, pooler host) — machine-local
+supabase/.temp/
