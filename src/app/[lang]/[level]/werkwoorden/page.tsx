@@ -15,46 +15,41 @@ export default async function VerbIndex({
   const level = levelFromSlug(slug);
   if (!language || !level) notFound();
 
-  // Verbs aren't leveled the way lessons are yet — show the whole library.
   const verbs = language.verbs;
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Link href={`/${language.code}/${slug}`} className="text-sm text-muted hover:text-accent">
-          ← {level}
+    <div className="space-y-5">
+      <div className="space-y-1">
+        <Link href={`/${language.code}`} className="text-sm text-muted hover:text-accent">
+          ← Home
         </Link>
-        <h1 className="text-3xl font-semibold tracking-tight">Vervoeging</h1>
-        <p className="max-w-2xl text-muted">
-          Tap any verb to see it across every tense — present, simple past,
-          present perfect, and future — each with a real sentence and a
-          speak-and-check.
+        <h1 className="text-2xl font-semibold tracking-tight">Vervoeging</h1>
+        <p className="text-sm text-muted">
+          Tap a verb to see it in present, past, present-perfect and future.
         </p>
       </div>
 
       {verbs.length === 0 ? (
-        <p className="rounded-xl border border-line bg-sunk px-4 py-3 text-sm text-muted">
+        <p className="rounded-2xl border border-line bg-sunk px-4 py-3 text-sm text-muted">
           Nothing here yet for this language.
         </p>
       ) : (
-        <div className="grid gap-2 sm:grid-cols-2">
-          {verbs.map((verb) => (
-            <Link
-              key={verb.id}
-              href={`/${language.code}/${slug}/werkwoorden/${verb.id}`}
-              className="group flex items-center justify-between gap-3 rounded-xl border border-line bg-surface px-4 py-3 transition-colors hover:border-accent"
-            >
-              <span>
-                <span className="target block font-semibold group-hover:text-accent">
+        <div className="grid grid-cols-2 gap-2.5">
+          {verbs.map((verb, i) => {
+            const tile = `tile-${(i % 6) + 1}`;
+            return (
+              <Link
+                key={verb.id}
+                href={`/${language.code}/${slug}/werkwoorden/${verb.id}`}
+                className={`${tile} tile-bg flex flex-col gap-1 rounded-2xl p-3.5 transition-transform active:scale-95`}
+              >
+                <span className="target text-lg font-semibold leading-tight tile-fg">
                   {verb.infinitive}
                 </span>
-                <span className="block text-sm text-muted">{verb.en}</span>
-              </span>
-              <span aria-hidden className="text-muted">
-                →
-              </span>
-            </Link>
-          ))}
+                <span className="text-xs text-muted">{verb.en}</span>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

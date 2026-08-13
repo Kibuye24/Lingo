@@ -1,7 +1,13 @@
 "use client";
 
 import { getSupabase } from "./supabase";
-import { loadProgress, replaceProgress, type Progress, type PhraseRecord } from "./progress";
+import {
+  loadProgress,
+  replaceProgress,
+  streakDays,
+  type Progress,
+  type PhraseRecord,
+} from "./progress";
 import { listProfiles, progressKeyFor, type Profile } from "./profiles";
 
 /**
@@ -218,6 +224,43 @@ async function syncProfiles(userId: string, local: Profile[]): Promise<Profile[]
 }
 
 /**
+ * Push the denormalised counters for one profile.
+ *
+ * These are derived from the same local data, but stored explicitly so the
+ * home screen (and any future leaderboard) can read a number without replaying
+ * the whole history — and so a streak survives even if raw events are pruned.
+ */
+async function pushStats(userId: string, profileId: string, progress: Progress) {
+  const supabase = getSupabase();
+  if (!supabase) return;
+
+  const current = streakDays(progress);
+
+  // Keep the longest streak monotonic across syncs.
+  const { data: existing } = await supabase
+    .from("profile_stats")
+    .select("longest_streak")
+    .eq("user_id", userId)
+    .eq("profile_id", profileId)
+    .maybeSingle();
+
+  const longest = Math.max(current, (existing as { longest_streak?: number } | null)?.longest_streak ?? 0);
+
+  await supabase.from("profile_stats").upsert(
+    {
+      user_id: userId,
+      profile_id: profileId,
+      current_streak: current,
+      longest_streak: longest,
+      lessons_completed: progress.lessonsCompleted.length,
+      phrases_practised: Object.keys(progress.phrases).length,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "user_id,profile_id" }
+  );
+}
+
+/**
  * Full two-way sync for every profile on this device.
  *
  * Pull → merge → write locally → push the merged result, so both sides end up
@@ -241,6 +284,7 @@ export async function syncNow(): Promise<{ ok: boolean; error?: string }> {
 
       writeProfileProgress(profile.id, merged);
       await pushProfile(userId, profile.id, merged);
+      await pushStats(userId, profile.id, merged);
     }
 
     // Re-read through the normal path so subscribed components re-render.

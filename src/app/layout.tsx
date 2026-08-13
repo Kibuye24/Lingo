@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import Script from "next/script";
 import BottomNav from "@/components/BottomNav";
 import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
@@ -36,19 +37,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${sans.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        {/*
-          Applies the saved theme before the page paints.
-
-          A plain <script src>, not next/script: `beforeInteractive` emits only
-          a <link rel="preload"> in the App Router, so the file downloads but
-          never executes and the theme never applies. A real tag is parsed and
-          run inline, which is exactly the blocking behaviour this needs.
-        */}
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script src="/theme-boot.js" />
+      <head>
+        <Script
+          id="theme-boot"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem("lingo.theme.v1");var d=s==="dark"||(s!=="light"&&window.matchMedia("(prefers-color-scheme:dark)").matches);document.documentElement.setAttribute("data-theme",d?"dark":"light");var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",d?"#0f1115":"#ffffff")}catch(e){document.documentElement.setAttribute("data-theme","light")}})();`,
+          }}
+        />
+      </head>
+      <body className="flex min-h-dvh flex-col">
         <SiteHeader />
         <main className="mx-auto w-full max-w-lg flex-1 px-4 pb-28 pt-5">{children}</main>
         <BottomNav />

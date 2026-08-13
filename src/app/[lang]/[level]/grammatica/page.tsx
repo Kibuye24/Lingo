@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import TileCard from "@/components/TileCard";
 import { getLanguage, languageCodes } from "@/content";
 import { contentForLevel, levelFromSlug, levels } from "@/content/levels";
 
@@ -18,38 +19,28 @@ export default async function GrammarIndex({
   const { grammar } = contentForLevel(language, level);
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Link href={`/${language.code}/${slug}`} className="text-sm text-muted hover:text-accent">
-          ← {level}
+    <div className="space-y-5">
+      <div className="space-y-1">
+        <Link href={`/${language.code}`} className="text-sm text-muted hover:text-accent">
+          ← Home
         </Link>
-        <h1 className="text-3xl font-semibold tracking-tight">Grammatica</h1>
-        <p className="max-w-2xl text-muted">
-          The rules you genuinely have to be told. No amount of repeating phrases
-          will reveal what &ldquo;hij&rdquo; is, or why it takes a different verb ending.
+        <h1 className="text-2xl font-semibold tracking-tight">Grammatica</h1>
+        <p className="text-sm text-muted">
+          The rules you have to be told — pronouns, verb endings, de/het, word order.
         </p>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        {grammar.map((point) => (
-          <Link
+      <div className="space-y-2.5">
+        {grammar.map((point, i) => (
+          <TileCard
             key={point.id}
             href={`/${language.code}/${slug}/grammatica/${point.id}`}
-            className="group flex gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent"
-          >
-            <span aria-hidden className="text-3xl leading-none">
-              {point.icon}
-            </span>
-            <span className="flex-1">
-              <span className="target block text-lg font-semibold group-hover:text-accent">
-                {point.title}
-              </span>
-              <span className="block text-sm text-muted">{point.titleEn}</span>
-              <span className="mt-1 block text-sm leading-relaxed text-muted">
-                {point.canDo}
-              </span>
-            </span>
-          </Link>
+            emoji={point.icon}
+            title={point.title}
+            subtitle={point.titleEn}
+            meta={point.canDo}
+            tint={i}
+          />
         ))}
       </div>
     </div>

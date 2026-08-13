@@ -1,8 +1,10 @@
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
   streamText,
   toUIMessageStream,
+  type LanguageModel,
   type UIMessage,
 } from "ai";
 
@@ -16,6 +18,33 @@ interface Body {
   known?: string[];
   /** English name of the language being learned, e.g. "Dutch". */
   language?: string;
+}
+
+/**
+ * Which model backs the tutor, decided at request time by whichever key is set.
+ *
+ * Gemini is the primary path — the app ships with a Google API key ("AI" in the
+ * env). If instead an AI Gateway key is present, it falls back to Claude through
+ * the gateway. With neither, conversation mode is politely unavailable and the
+ * rest of the app is untouched.
+ */
+function pickModel(): { model: LanguageModel } | { error: string } {
+  const geminiKey =
+    process.env.GEMINI_API_KEY ?? process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+  if (geminiKey) {
+    const google = createGoogleGenerativeAI({ apiKey: geminiKey });
+    return { model: google("gemini-2.5-flash-lite") };
+  }
+
+  if (process.env.AI_GATEWAY_API_KEY) {
+    return { model: "anthropic/claude-sonnet-5" };
+  }
+
+  return {
+    error:
+      "No AI key set. Add GEMINI_API_KEY to .env.local to enable conversation mode — lessons, vocabulary and review all work without it.",
+  };
 }
 
 function systemPrompt(
@@ -51,20 +80,15 @@ function systemPrompt(
 }
 
 export async function POST(req: Request) {
-  if (!process.env.AI_GATEWAY_API_KEY) {
-    return Response.json(
-      {
-        error:
-          "No AI_GATEWAY_API_KEY set. Add one to .env.local to enable conversation mode — the lessons, sound lab and review all work without it.",
-      },
-      { status: 501 }
-    );
+  const picked = pickModel();
+  if ("error" in picked) {
+    return Response.json({ error: picked.error }, { status: 501 });
   }
 
   const { messages, scenario, known, language = "Dutch" }: Body = await req.json();
 
   const result = streamText({
-    model: "anthropic/claude-sonnet-5",
+    model: picked.model,
     system: systemPrompt(language, scenario, known),
     messages: await convertToModelMessages(messages),
   });

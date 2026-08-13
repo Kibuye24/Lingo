@@ -15,6 +15,11 @@ import {
   subscribeProfiles,
   type Profile,
 } from "./profiles";
+import {
+  selectedLanguages,
+  serverSelectedLanguages,
+  subscribeLanguages,
+} from "./languagePrefs";
 
 const neverChanges = () => () => {};
 
@@ -51,4 +56,13 @@ export function useProfiles(): Profile[] {
 /** The profile currently active on this device. */
 export function useActiveProfileId(): string {
   return useSyncExternalStore(subscribeProfiles, activeProfileId, serverActiveProfileId);
+}
+
+/** Language codes the learner has chosen to study (empty = not chosen yet). */
+export function useSelectedLanguages(): string[] {
+  return useSyncExternalStore(
+    subscribeLanguages,
+    selectedLanguages,
+    serverSelectedLanguages
+  );
 }

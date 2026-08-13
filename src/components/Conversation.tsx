@@ -196,8 +196,8 @@ export default function Conversation({ language }: { language: LanguageConfig })
 
         {error && (
           <p className="rounded-xl bg-bad-soft px-3 py-2 text-sm text-bad">
-            {error.message.includes("501") || error.message.includes("AI_GATEWAY")
-              ? "Conversation mode needs an AI Gateway key. Everything else in the app works without one."
+            {error.message.includes("501") || error.message.toLowerCase().includes("ai key")
+              ? "Conversation mode needs a Gemini API key. Everything else in the app works without one."
               : error.message}
           </p>
         )}

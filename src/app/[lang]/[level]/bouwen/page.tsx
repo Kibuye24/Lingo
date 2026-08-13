@@ -19,8 +19,8 @@ export default async function BuildPage({ params }: PageProps<"/[lang]/[level]/b
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <Link href={`/${language.code}/${slug}`} className="text-sm text-muted hover:text-accent">
-          ← {level}
+        <Link href={`/${language.code}`} className="text-sm text-muted hover:text-accent">
+          ← Home
         </Link>
         <h1 className="text-3xl font-semibold tracking-tight">Zinnen bouwen</h1>
         <p className="max-w-2xl text-muted">

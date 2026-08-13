@@ -12,6 +12,7 @@
     "lexicon:build": "tsx scripts/build-lexicon.ts"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.43",
     "@ai-sdk/react": "^4.0.66",
     "@supabase/supabase-js": "^2.112.3",
     "ai": "^7.0.63",

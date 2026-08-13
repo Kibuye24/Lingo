@@ -123,6 +123,19 @@ export function MoreIcon({ className }: Props) {
   );
 }
 
+export function CloseIcon({ className }: Props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className ?? base} aria-hidden>
+      <path
+        d="M6 6l12 12M18 6 6 18"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function SunIcon({ className }: Props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className ?? "h-5 w-5"} aria-hidden>

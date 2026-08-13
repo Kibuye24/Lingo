@@ -89,6 +89,29 @@ body {
   height: env(safe-area-inset-bottom, 0px);
 }
 
+/*
+ * Tinted tiles for the section grids (vocab, grammar, sentence builder…).
+ * Each pairs a soft background with a saturated foreground for the icon, and
+ * carries its own dark-mode values so the colour survives the theme switch.
+ * Components cycle through tile-1…6 by index.
+ */
+.tile-1 { --tile-bg: #fff0e6; --tile-fg: #e2560f; }
+.tile-2 { --tile-bg: #eaf3ff; --tile-fg: #2563eb; }
+.tile-3 { --tile-bg: #e9f9ef; --tile-fg: #15803d; }
+.tile-4 { --tile-bg: #f5ecff; --tile-fg: #7c3aed; }
+.tile-5 { --tile-bg: #fff1f4; --tile-fg: #e11d48; }
+.tile-6 { --tile-bg: #fef6e0; --tile-fg: #b45309; }
+
+:root[data-theme="dark"] .tile-1 { --tile-bg: #2e1a10; --tile-fg: #ff8a4c; }
+:root[data-theme="dark"] .tile-2 { --tile-bg: #12203a; --tile-fg: #6ea8ff; }
+:root[data-theme="dark"] .tile-3 { --tile-bg: #10281b; --tile-fg: #4ade80; }
+:root[data-theme="dark"] .tile-4 { --tile-bg: #22163a; --tile-fg: #b794f6; }
+:root[data-theme="dark"] .tile-5 { --tile-bg: #2c1418; --tile-fg: #fb7185; }
+:root[data-theme="dark"] .tile-6 { --tile-bg: #2a2010; --tile-fg: #fbbf24; }
+
+.tile-bg { background: var(--tile-bg); }
+.tile-fg { color: var(--tile-fg); }
+
 @keyframes pulse-ring {
   0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 45%, transparent); }
   70% { box-shadow: 0 0 0 18px color-mix(in oklab, var(--accent) 0%, transparent); }

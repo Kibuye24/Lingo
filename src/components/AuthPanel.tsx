@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getSupabase, syncConfigured } from "@/lib/supabase";
 import { syncNow } from "@/lib/sync";
+import { pullRemoteLanguages } from "@/lib/languagePrefs";
 
 /**
  * Sign-in for cross-device sync.
@@ -14,6 +15,8 @@ import { syncNow } from "@/lib/sync";
  */
 export default function AuthPanel() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [message, setMessage] = useState("");
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -38,6 +41,7 @@ export default function AuthPanel() {
 
   async function runSync() {
     setSyncing(true);
+    await pullRemoteLanguages();
     const result = await syncNow();
     setSyncing(false);
     if (!result.ok && result.error) setMessage(result.error);
@@ -82,58 +86,89 @@ export default function AuthPanel() {
     );
   }
 
-  if (status === "sent") {
-    return (
-      <p className="px-2.5 py-2 text-xs leading-relaxed text-muted">
-        Check <span className="font-medium text-foreground">{email}</span> for a
-        sign-in link. Open it on each device you want synced.
-      </p>
-    );
-  }
-
   return (
     <form
       onSubmit={async (event) => {
         event.preventDefault();
         const supabase = getSupabase();
-        if (!supabase || !email.trim()) return;
+        if (!supabase || !email.trim() || !password) return;
 
         setStatus("sending");
-        const { error } = await supabase.auth.signInWithOtp({
-          email: email.trim(),
-          options: { emailRedirectTo: window.location.origin },
-        });
+        setMessage("");
+
+        const { data, error } = isSignUp
+          ? await supabase.auth.signUp({
+              email: email.trim(),
+              password,
+            })
+          : await supabase.auth.signInWithPassword({
+              email: email.trim(),
+              password,
+            });
 
         if (error) {
           setStatus("error");
           setMessage(error.message);
         } else {
           setStatus("sent");
+          if (isSignUp && !data.session) {
+            setMessage("Account created! Check email if confirmation is required.");
+          }
         }
       }}
-      className="space-y-1.5 px-2.5 py-2"
+      className="space-y-2 px-2.5 py-2"
     >
-      <label className="block text-xs text-muted" htmlFor="sync-email">
-        Sync across devices
-      </label>
-      <div className="flex items-center gap-1.5">
-        <input
-          id="sync-email"
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="you@example.com"
-          className="h-8 flex-1 rounded-md border border-line bg-background px-2 text-sm outline-none focus:border-accent"
-        />
+      <div className="flex items-center justify-between text-xs">
+        <span className="text-muted font-medium">
+          {isSignUp ? "Create Account" : "Sync Account"}
+        </span>
         <button
-          type="submit"
-          disabled={status === "sending"}
-          className="h-8 rounded-md bg-accent px-2.5 text-xs font-medium text-white disabled:opacity-50"
+          type="button"
+          onClick={() => {
+            setIsSignUp(!isSignUp);
+            setMessage("");
+            setStatus("idle");
+          }}
+          className="text-accent hover:underline"
         >
-          {status === "sending" ? "…" : "Send"}
+          {isSignUp ? "Log in" : "Sign up"}
         </button>
       </div>
-      {status === "error" && <p className="text-xs text-bad">{message}</p>}
+
+      <input
+        type="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="you@example.com"
+        required
+        className="h-8 w-full rounded-md border border-line bg-background px-2 text-xs outline-none focus:border-accent"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        placeholder="Password"
+        required
+        minLength={6}
+        className="h-8 w-full rounded-md border border-line bg-background px-2 text-xs outline-none focus:border-accent"
+      />
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="h-8 w-full rounded-md bg-accent text-xs font-medium text-white disabled:opacity-50"
+      >
+        {status === "sending"
+          ? "…"
+          : isSignUp
+          ? "Sign Up"
+          : "Log In"}
+      </button>
+
+      {message && (
+        <p className={`text-xs ${status === "error" ? "text-bad" : "text-muted"}`}>
+          {message}
+        </p>
+      )}
     </form>
   );
 }
