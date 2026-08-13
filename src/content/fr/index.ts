@@ -14,6 +14,7 @@ export const french: LanguageConfig = {
   indefiniteArticles: ["un", "une", "des"],
   blurb:
     "Written long, spoken short. The work is in the nasal vowels, the r, and learning which letters you are supposed to ignore.",
+  flag: "🇫🇷",
   units,
   lessons,
   soundDrills,

@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
-:root {
+/*
+ * Light is the default and the design's home. Dark is a real alternative
+ * rather than an inversion — it keeps the same warm accent so the app still
+ * feels like itself at night.
+ *
+ * Themes are driven by `data-theme` on <html>, set before first paint by an
+ * inline script in layout.tsx, so there is never a flash of the wrong theme.
+ */
+
+:root,
+:root[data-theme="light"] {
   --background: #ffffff;
   --surface: #ffffff;
   --surface-sunk: #f6f7f9;
@@ -16,6 +26,26 @@
   --warn-soft: #fbf0d0;
   --bad: #b91c1c;
   --bad-soft: #fbdedb;
+  --shell: rgba(255, 255, 255, 0.86);
+}
+
+:root[data-theme="dark"] {
+  --background: #0f1115;
+  --surface: #171a21;
+  --surface-sunk: #1e222b;
+  --foreground: #f2f4f8;
+  --muted: #98a1b0;
+  --line: #2a2f3a;
+  --accent: #ff7a3d;
+  --accent-soft: #2e1a10;
+  --locked: #3a404c;
+  --good: #4ade80;
+  --good-soft: #14301f;
+  --warn: #fbbf24;
+  --warn-soft: #33280c;
+  --bad: #f87171;
+  --bad-soft: #3a1a1a;
+  --shell: rgba(15, 17, 21, 0.86);
 }
 
 @theme inline {
@@ -38,16 +68,25 @@
   --font-mono: var(--font-mono-var);
 }
 
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans-var), ui-sans-serif, system-ui, sans-serif;
+  /* Native-app feel: no rubber-band highlight, no tap flash. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Target-language text gets a hair more space to breathe — it is read aloud, not skimmed. */
 .target {
   letter-spacing: -0.011em;
+}
+
+/* Respects the iPhone home indicator and Android gesture bar. */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.h-safe-bottom {
+  height: env(safe-area-inset-bottom, 0px);
 }
 
 @keyframes pulse-ring {
@@ -60,8 +99,28 @@ body {
   animation: pulse-ring 1.5s ease-out infinite;
 }
 
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.sheet-up {
+  animation: sheet-up 0.22s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fade-in 0.18s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .listening {
+  .listening,
+  .sheet-up,
+  .fade-in {
     animation: none;
   }
 }

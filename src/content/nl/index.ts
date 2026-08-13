@@ -20,6 +20,7 @@ export const dutch: LanguageConfig = {
   indefiniteArticles: ["een"],
   blurb:
     "Direct, guttural, and closer to English than it sounds. The hard parts are the g, the vowels, and remembering whether a word is de or het.",
+  flag: "🇳🇱",
   units,
   lessons: [...coreLessons, ...lessonsA1],
   soundDrills,

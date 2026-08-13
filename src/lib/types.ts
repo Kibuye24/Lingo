@@ -324,5 +324,7 @@ export interface LanguageConfig {
   curatedLexicon: LexiconEntry[];
   /** Shown on the language picker. */
   blurb: string;
+  /** Flag emoji for the picker and language switcher. */
+  flag: string;
   ui: UILabels;
 }
