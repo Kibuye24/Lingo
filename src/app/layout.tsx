@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import AuthGate from "@/components/AuthGate";
 import BottomNav from "@/components/BottomNav";
 import SiteHeader from "@/components/SiteHeader";
 import "./globals.css";
@@ -50,7 +51,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="flex min-h-dvh flex-col">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-lg flex-1 px-4 pb-28 pt-5">{children}</main>
+        <main className="mx-auto w-full max-w-lg flex-1 px-4 pb-28 pt-5 md:max-w-2xl lg:max-w-4xl">
+          <AuthGate>{children}</AuthGate>
+        </main>
         <BottomNav />
       </body>
     </html>

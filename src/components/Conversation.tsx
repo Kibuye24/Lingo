@@ -19,9 +19,15 @@ import type { LanguageConfig } from "@/lib/types";
  * state says "tap to speak" instead of showing a text cursor for the same
  * reason.
  */
-export default function Conversation({ language }: { language: LanguageConfig }) {
+export default function Conversation({
+  language,
+  initialScenarioId,
+}: {
+  language: LanguageConfig;
+  initialScenarioId?: string;
+}) {
   const params = useSearchParams();
-  const initialLesson = params.get("lesson") ?? "";
+  const initialLesson = initialScenarioId ?? params.get("lesson") ?? "";
   const { ui, locale, code, lessons, nameEn, name } = language;
 
   const [scenarioId, setScenarioId] = useState(initialLesson);

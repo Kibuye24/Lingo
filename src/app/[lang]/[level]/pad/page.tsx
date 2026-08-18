@@ -20,17 +20,17 @@ export default async function TrailPage({ params }: PageProps<"/[lang]/[level]/p
     <div className="space-y-8">
       <div className="space-y-2">
         <Link
-          href={`/${language.code}/${slug}`}
+          href={`/${language.code}`}
           className="text-sm text-muted hover:text-accent"
         >
-          ← {level}
+          ← Home
         </Link>
         <h1 className="text-3xl font-semibold tracking-tight">{language.ui.lessons}</h1>
         <p className="text-muted">
           {lessons.length} lessons, in order. Tap any circle to start.
         </p>
       </div>
-      <LessonTrail language={language} units={units} lessons={lessons} />
+      <LessonTrail language={language} level={slug} units={units} lessons={lessons} />
     </div>
   );
 }

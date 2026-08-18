@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AudioButton from "./AudioButton";
 import SpeakCheck from "./SpeakCheck";
+import { speak } from "@/lib/speech";
 import type { LanguageConfig, Phrase } from "@/lib/types";
 import type { Attempt } from "@/lib/scoring";
 
@@ -63,15 +64,20 @@ export default function PhraseStep({ language, phrase, onScored }: Props) {
         {showGloss && (
           <div className="mt-3 flex flex-wrap gap-2">
             {phrase.gloss.map((part, index) => (
-              <span
+              <button
                 key={`${part.target}-${index}`}
-                className="rounded-lg border border-line bg-surface px-2.5 py-1.5 text-sm"
+                onClick={() => speak(part.target, { locale, rate: 0.85 })}
+                aria-label={`Play "${part.target}"`}
+                className="rounded-lg border border-line bg-surface px-2.5 py-1.5 text-sm transition-colors hover:border-accent active:scale-95"
               >
                 <span className="target font-medium">{part.target}</span>
                 <span className="text-muted"> · {part.en}</span>
-              </span>
+              </button>
             ))}
           </div>
+        )}
+        {showGloss && (
+          <p className="mt-1.5 text-xs text-muted">Tik een woord om het te horen · tap to hear</p>
         )}
       </div>
 

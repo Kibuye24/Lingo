@@ -28,7 +28,8 @@ export default function AudioButton({ text, locale, withSlow, size = "md", label
 
   const play = (mode: "normal" | "slow") => {
     setPlaying(mode);
-    speak(text, { locale, rate: mode === "slow" ? 0.6 : 1, onEnd: () => setPlaying(null) });
+    // 0.4 is genuinely slow — 0.6 still ran too fast to pick apart the sounds.
+    speak(text, { locale, rate: mode === "slow" ? 0.4 : 1, onEnd: () => setPlaying(null) });
   };
 
   const base =

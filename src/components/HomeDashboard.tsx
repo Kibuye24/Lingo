@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import StreakCalendar from "./StreakCalendar";
 import { BuildIcon, FlameIcon, GrammarIcon, ReviewIcon, WordsIcon } from "./Icons";
-import { useActiveProfileId, useHydrated, useProfiles, useProgress } from "@/lib/hooks";
+import { useHydrated, useProgress } from "@/lib/hooks";
+import { useSession } from "@/lib/auth";
 import { duePhraseIds, streakDays, weekActivity } from "@/lib/progress";
 import { contentForLevel, levels, type Level } from "@/content/levels";
 import type { LanguageConfig } from "@/lib/types";
@@ -19,15 +21,15 @@ import type { LanguageConfig } from "@/lib/types";
 export default function HomeDashboard({ language }: { language: LanguageConfig }) {
   const hydrated = useHydrated();
   const progress = useProgress();
-  const profiles = useProfiles();
-  const activeId = useActiveProfileId();
+  const { user } = useSession();
 
   const level: Level = "A1";
   const levelSlug = levels.find((l) => l.id === level)!.slug;
   const base = `/${language.code}/${levelSlug}`;
   const { lessons } = useMemo(() => contentForLevel(language, level), [language]);
 
-  const name = profiles.find((p) => p.id === activeId)?.name ?? "";
+  const emailName = user?.email?.split("@")[0] ?? "";
+  const name = emailName ? emailName.charAt(0).toUpperCase() + emailName.slice(1) : "";
   const done = (id: string) => progress.lessonsCompleted.includes(`${language.code}:${id}`);
 
   const completed = hydrated ? lessons.filter((lesson) => done(lesson.id)).length : 0;
@@ -37,6 +39,7 @@ export default function HomeDashboard({ language }: { language: LanguageConfig }
   const streak = hydrated ? streakDays(progress) : 0;
   const week = hydrated ? weekActivity(progress) : [];
   const due = hydrated ? duePhraseIds(progress, language.code).length : 0;
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const today = new Date().toLocaleDateString("en-GB", {
     weekday: "short",
@@ -84,20 +87,37 @@ export default function HomeDashboard({ language }: { language: LanguageConfig }
           </div>
         </div>
 
-        <div className="mt-4 flex justify-between gap-1">
-          {week.map((day) => (
-            <div key={day.day} className="flex flex-1 flex-col items-center gap-1.5">
-              <span
-                className={`grid h-8 w-8 place-items-center rounded-full text-sm ${
-                  day.done ? "bg-white text-accent" : "border border-white/35 text-white/50"
-                }`}
-              >
-                {day.done ? "✓" : ""}
-              </span>
-              <span className="text-[10px] text-white/75">{day.label}</span>
-            </div>
-          ))}
-        </div>
+        {!calendarOpen && (
+          <div className="mt-4 flex justify-between gap-1">
+            {week.map((day) => (
+              <div key={day.day} className="flex flex-1 flex-col items-center gap-1.5">
+                <span
+                  className={`grid h-8 w-8 place-items-center rounded-full text-sm ${
+                    day.done ? "bg-white text-accent" : "border border-white/35 text-white/50"
+                  }`}
+                >
+                  {day.done ? "✓" : ""}
+                </span>
+                <span className="text-[10px] text-white/75">{day.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {calendarOpen && (
+          <div className="mt-4">
+            <StreakCalendar activeDays={progress.activeDays} />
+          </div>
+        )}
+
+        <button
+          onClick={() => setCalendarOpen((o) => !o)}
+          aria-expanded={calendarOpen}
+          className="mt-3 flex w-full items-center justify-center gap-1 text-xs font-medium text-white/85"
+        >
+          {calendarOpen ? "Verberg kalender · Hide" : "Bekijk kalender · View calendar"}
+          <span aria-hidden>{calendarOpen ? "▴" : "▾"}</span>
+        </button>
       </section>
 
       {/* Continue */}

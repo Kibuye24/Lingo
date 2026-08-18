@@ -1,6 +1,6 @@
 "use client";
 
-import { activeProfileId, progressKeyFor } from "./profiles";
+import { currentIdentity, progressKeyFor } from "./identity";
 
 /**
  * Local progress store with a light spaced-repetition schedule.
@@ -15,7 +15,7 @@ import { activeProfileId, progressKeyFor } from "./profiles";
  */
 
 function key(): string {
-  return progressKeyFor(activeProfileId());
+  return progressKeyFor(currentIdentity());
 }
 
 /** Days until the next review, indexed by how many times it's been right. */
@@ -49,9 +49,11 @@ export interface Progress {
   lessonsCompleted: string[];
   /** ISO dates on which at least one thing was practised. */
   activeDays: string[];
+  /** Module tests passed, `${lang}:${unitId}` — the gate to the next module. */
+  testsPassed: string[];
 }
 
-const empty: Progress = { phrases: {}, lessonsCompleted: [], activeDays: [] };
+const empty: Progress = { phrases: {}, lessonsCompleted: [], activeDays: [], testsPassed: [] };
 
 function isBrowser() {
   return typeof window !== "undefined";
@@ -67,6 +69,7 @@ export function loadProgress(): Progress {
       phrases: parsed.phrases ?? {},
       lessonsCompleted: parsed.lessonsCompleted ?? [],
       activeDays: parsed.activeDays ?? [],
+      testsPassed: parsed.testsPassed ?? [],
     };
   } catch {
     return empty;
@@ -105,12 +108,14 @@ export function subscribeProgress(listener: () => void): () => void {
     // profile means different progress, so any mounted useProgress() must
     // re-read rather than keep showing the previous profile's cache.
     window.addEventListener("lingo:profile-changed", invalidate);
+    window.addEventListener("lingo:identity-changed", invalidate);
   }
   return () => {
     listeners.delete(listener);
     if (isBrowser() && listeners.size === 0) {
       window.removeEventListener("storage", invalidate);
       window.removeEventListener("lingo:profile-changed", invalidate);
+      window.removeEventListener("lingo:identity-changed", invalidate);
     }
   };
 }
@@ -163,18 +168,39 @@ export function recordAttempt(
   };
 
   progress.phrases[key] = record;
-  if (!progress.activeDays.includes(today())) progress.activeDays.push(today());
+  markTodayActive(progress);
   save(progress);
   return record;
+}
+
+/** Records today as a practice day, in place. Idempotent. */
+function markTodayActive(progress: Progress) {
+  const day = today();
+  if (!progress.activeDays.includes(day)) progress.activeDays.push(day);
 }
 
 export function markLessonComplete(lang: string, lessonId: string) {
   const progress = loadProgress();
   const key = `${lang}:${lessonId}`;
-  if (!progress.lessonsCompleted.includes(key)) {
-    progress.lessonsCompleted.push(key);
-    save(progress);
-  }
+  const alreadyDone = progress.lessonsCompleted.includes(key);
+  if (!alreadyDone) progress.lessonsCompleted.push(key);
+
+  // Finishing a lesson counts toward the streak even if no phrase was spoken —
+  // otherwise a tapped-through lesson leaves the streak and week dots empty.
+  const dayNew = !progress.activeDays.includes(today());
+  markTodayActive(progress);
+
+  if (!alreadyDone || dayNew) save(progress);
+}
+
+/** Record that a module test was passed — unlocks the next module. */
+export function markTestPassed(lang: string, unitId: string) {
+  const progress = loadProgress();
+  const key = `${lang}:${unitId}`;
+  if (progress.testsPassed.includes(key)) return;
+  progress.testsPassed.push(key);
+  markTodayActive(progress);
+  save(progress);
 }
 
 /**
